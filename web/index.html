@@ -29,9 +29,9 @@
     <body>
         <div id="login">
             <img src="images/logo.png"/>
-            <form action="" method="post" onsubmit="return notNull();">
-                <input type="text" class="nome obg" id="nome" placeholder="Usuario" onclick="bgBranco('nome');">
-                <input type="password" class="psw obg" id="psw" placeholder="Senha" onclick="bgBranco('psw');">
+            <form action="Login_Usuario" method="post" onsubmit="return notNull();">
+                <input name="nome" type="text" class="nome obg" id="nome" placeholder="Usuario" onclick="bgBranco('nome');">
+                <input name="psw" type="password" class="psw obg" id="psw" placeholder="Senha" onclick="bgBranco('psw');">
                 <input type="submit" class="submit" id='submit' value="Entrar">
             </form>
         </div>
