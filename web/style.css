@@ -1,0 +1,58 @@
+body {
+    margin:0px;
+    font-family:'Raleway', sans-serif;
+    line-height:14px;
+    font-size:14px;
+    background:#f4f4f4;
+    color:#757575;
+}
+
+#login {
+    position:absolute;
+    left:50%;
+    top:50%;
+    margin-top:-150px;
+    margin-left:-150px;
+}
+
+input, textarea {
+    outline:none;
+    padding:10px 2%;
+    border-radius:5px;
+    border:1px solid rgba(0, 0, 0, 0.18);
+}
+
+#login form {
+    margin-bottom:30px;
+}
+
+#login input {
+    display: block;
+    margin-bottom:10px;
+    width:96%;
+}
+
+#login img {
+    width:300px;
+}
+
+input[type=submit] {
+    cursor:pointer;
+}
+
+#login .submit {
+    float:right;
+    width:auto;
+    color:rgb(155, 160, 177);
+    background:#363c50;
+    text-transform:uppercase;
+    font-weight:900;
+    padding:10px 15px;
+    font-size:12px;
+    letter-spacing:1px;
+}
+
+#login .submit:hover {
+    background:#f4c432;
+    color:#9c7707;
+}
