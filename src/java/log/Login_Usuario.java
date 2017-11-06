@@ -8,11 +8,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(name="Login_Usuario", urlPatterns = {"/Login_Usuario"})
 public class Login_Usuario extends HttpServlet {
@@ -43,51 +45,22 @@ public class Login_Usuario extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try (PreparedStatement sql = db.prepareStatement("SELECT * FROM ADMINISTRADOR WHERE LOGIN=? AND SENHA=?")){
+            String us = request.getParameter("nome");
             sql.setString(1,request.getParameter("nome"));
             sql.setLong(2,hash(request.getParameter("psw")));
             ResultSet res = sql.executeQuery();
             if (res.next()){
-                response.setContentType("text/html;charset=UTF-8");
-                try (PrintWriter out = response.getWriter()) {
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>Servlet NewServlet</title>");            
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("<h1>Servlet NewServlet at " + "EXISTE" + "</h1>");
-                    out.println("</body>");
-                    out.println("</html>");
-                    }
+                HttpSession session = request.getSession();
+                session.setAttribute("usuario",us);
+                session.setAttribute("logado","true");
+                RequestDispatcher resp = request.getRequestDispatcher("crud.jsp");
+                resp.forward(request, response);
             }
             else{
-                response.setContentType("text/html;charset=UTF-8");
-                try (PrintWriter out = response.getWriter()) {
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>Servlet NewServlet</title>");            
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("<h1>Servlet NewServlet at " + "NAO EXISTE" + "</h1>");
-                    out.println("</body>");
-                    out.println("</html>");
-                    }
-
+                response.sendError(400);
             }
         } catch (Exception ex) {
-            response.setContentType("text/html;charset=UTF-8");
-            try (PrintWriter out = response.getWriter()) {
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet NewServlet</title>");            
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1>Servlet NewServlet at " + ex + "</h1>");
-                out.println("</body>");
-                out.println("</html>");
-                }
+            
         }
     }
     
