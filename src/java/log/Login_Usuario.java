@@ -58,7 +58,7 @@ public class Login_Usuario extends HttpServlet {
             }
             else{
                 request.setAttribute("message", "mensagem('Usuário ou senha inválido.');");
-                request.getRequestDispatcher("/index.jsp").forward(request,response);  
+                request.getRequestDispatcher("index.jsp").forward(request,response);  
             }
         } catch (Exception ex) {
             

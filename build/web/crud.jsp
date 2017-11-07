@@ -1,9 +1,3 @@
-<%-- 
-    Document   : crud
-    Created on : Nov 6, 2017, 7:05:49 PM
-    Author     : Carlos Henrique
---%>
-
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Connection"%>
@@ -28,25 +22,13 @@
                         <option value="CLIENTES">Clientes</option>
                         <option value="COMPRAS">Compras</option>
                         <option value="PRODUTO">Produto</option>
+                        <option value="ADMINISTRADOR">Administrador</option>
                     </select>
                     <input type="submit" value="Selecionar">
                 </form>
             </div>
             <div id="tabela">
-                <% try {  ResultSet res = (ResultSet)request.getAttribute("resp");%>
-                    <table>
-                        <% do { %>
-                        <TR>
-                            <TD><%=res.getInt(1)%></TD>
-                            <TD><%=res.getString(2)%></TD>
-                        </TR>
-                        <% }while (res.next()); %>
-                    </table>
-                    <%
-                    res.close();
-                }
-                catch (Exception ex) {}
-                %>
+                
             </div>
         </div>
             
