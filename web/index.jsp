@@ -1,3 +1,5 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
     <head>
         <title>ELETRIO</title>
@@ -24,11 +26,16 @@
                 var c = document.getElementById(campo);
                 c.style.backgroundColor = "#fff";
             }
+            function mensagem(msg) {
+                if (msg !== 'null')
+                    alert(msg);
+            }
         </script>
     </head>
     <body>
         <div id="login">
             <img src="images/logo.png"/>
+            <script><%= request.getAttribute("message")%>;</script>
             <form action="Login_Usuario" method="post" onsubmit="return notNull();">
                 <input name="nome" type="text" class="nome obg" id="nome" placeholder="Usuario" onclick="bgBranco('nome');">
                 <input name="psw" type="password" class="psw obg" id="psw" placeholder="Senha" onclick="bgBranco('psw');">
