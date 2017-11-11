@@ -27,8 +27,10 @@
                 c.style.backgroundColor = "#fff";
             }
             function mensagem(msg) {
-                if (msg !== 'null')
+                if (msg !== 'null') {
+                    window.location.replace('/Eletrio');
                     alert(msg);
+                }
             }
         </script>
     </head>

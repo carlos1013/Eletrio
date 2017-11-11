@@ -45,13 +45,13 @@ public class Tabelas extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<String> resp = new ArrayList<>();
-        String nomeTabela = request.getParameter("tabela"),aux = "";
+        String nomeTabela = request.getParameter("tabela"),aux = nomeTabela;
         String query = "SELECT * FROM "+nomeTabela;
         try (PreparedStatement sql = db.prepareStatement(query)){
             ResultSet res = sql.executeQuery();
             ResultSetMetaData resMeta = res.getMetaData();
             int qtdCol = resMeta.getColumnCount();
-            aux = aux+Integer.toString(qtdCol);
+            aux = aux+" "+Integer.toString(qtdCol);
             for (int x=1;x<=qtdCol;x++){
                 aux = aux+" "+resMeta.getColumnName(x);
             }
@@ -59,11 +59,13 @@ public class Tabelas extends HttpServlet {
             while(res.next()){
                 aux = "";
                 for (int x=1;x<=qtdCol;x++){
-                    aux = aux+" "+res.getString(x);
+                    aux = aux+res.getString(x)+" ";
                 }
                 resp.add(aux);
             }
-            try (PrintWriter out = response.getWriter()) {
+            request.setAttribute("r", resp);
+            request.getRequestDispatcher("selecionar.jsp").forward(request,response);  
+            /*try (PrintWriter out = response.getWriter()) {
                 out.println("<!DOCTYPE html>");
                 out.println("<html>");
                 out.println("<head>");
@@ -76,7 +78,7 @@ public class Tabelas extends HttpServlet {
                 }
                 out.println("</body>");
                 out.println("</html>");
-            }
+            }*/
         } catch (Exception ex) {
             
         }

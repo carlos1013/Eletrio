@@ -53,7 +53,7 @@ public class Login_Usuario extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("usuario",us);
                 session.setAttribute("logado","true");
-                RequestDispatcher resp = request.getRequestDispatcher("crud.jsp");
+                RequestDispatcher resp = request.getRequestDispatcher("selecionar.jsp");
                 resp.forward(request, response);
             }
             else{
