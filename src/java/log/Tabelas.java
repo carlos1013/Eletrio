@@ -71,10 +71,6 @@ public class Tabelas extends HttpServlet {
     }
     
     private void inserir(String nome,HttpServletResponse response,HttpServletRequest request){
-<<<<<<< HEAD
-        String id = request.getParameter("id"),pe;
-=======
->>>>>>> 24a8b9e9635ef86a87dfe5491732930c5a4f8427
         switch (nome) {
             case "ADMINISTRADOR":
                 try(PreparedStatement sql = db.prepareStatement("INSERT INTO ADMINISTRADOR (LOGIN,SENHA) VALUES (?,?)")){
@@ -135,16 +131,12 @@ public class Tabelas extends HttpServlet {
     }
     
     private void editar(String nome,HttpServletResponse response,HttpServletRequest request){
-<<<<<<< HEAD
-        String id = request.getParameter("id"),pe;
-=======
->>>>>>> 24a8b9e9635ef86a87dfe5491732930c5a4f8427
         switch (nome) {
             case "ADMINISTRADOR":
                 try(PreparedStatement sql = db.prepareStatement("UPDATE ADMINISTRADOR SET LOGIN=?,SENHA=? WHERE ID=?")){
                     sql.setString(1,request.getParameter("LOGIN"));
                     sql.setLong(2,hash(request.getParameter("SENHA")));
-                    sql.setInt(3,Integer.parseInt(request.getParameter("ID")));
+                    sql.setInt(3,Integer.parseInt(request.getParameter("id")));
                     sql.executeUpdate();
                 }
                 catch(Exception err){
@@ -154,7 +146,7 @@ public class Tabelas extends HttpServlet {
             case "CATEGORIA":
                 try(PreparedStatement sql = db.prepareStatement("UPDATE CATEGORIA SET DESCRICAO=? WHERE ID=?")){
                     sql.setString(1,request.getParameter("DESCRICAO"));
-                    sql.setInt(2,Integer.parseInt(request.getParameter("ID")));
+                    sql.setInt(2,Integer.parseInt(request.getParameter("id")));
                     sql.executeUpdate();
                 }
                 catch(Exception err){
@@ -176,7 +168,7 @@ public class Tabelas extends HttpServlet {
                     sql.setString(11,request.getParameter("CELULAR"));
                     sql.setString(12,request.getParameter("CARTAO"));
                     sql.setString(13,request.getParameter("BANDEIRA"));
-                    sql.setInt(14,Integer.parseInt(request.getParameter("ID")));
+                    sql.setInt(14,Integer.parseInt(request.getParameter("id")));
                     sql.executeUpdate();
                 }
                 catch(Exception err){
@@ -189,7 +181,7 @@ public class Tabelas extends HttpServlet {
                     sql.setString(2,request.getParameter("NOME"));
                     sql.setString(3,request.getParameter("DESCRICAO"));
                     sql.setFloat(4,Float.parseFloat(request.getParameter("VALOR")));                    
-                    sql.setInt(5,Integer.parseInt(request.getParameter("ID")));
+                    sql.setInt(5,Integer.parseInt(request.getParameter("id")));
                     sql.executeUpdate();
                 }
                 catch(Exception err){
