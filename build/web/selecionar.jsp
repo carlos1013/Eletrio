@@ -118,13 +118,10 @@ placeholder="Endereço:" onclick="bgBranco('endereco');" />
 
                                         <input name="referencia" id="referencia" type="text" class="mid right" placeholder="Referência:"/><br/>
 
-                                        <input name="bairro" id="bairro" maxlength="50" type="text" class="mid left obg" placeholder="Bairro:" 
-onclick="bgBranco('bairro');"/>
-                                        <input name="cidade" id="cidade" maxlength="50" type="text" class="mid right obg" placeholder="Cidade:" 
-onclick="bgBranco('cidade');"/><br/>
+                                        <input name="bairro" id="bairro" maxlength="50" type="text" class="mid left obg" placeholder="Bairro:" onclick="bgBranco('bairro');"/>
+                                        <input name="cidade" id="cidade" maxlength="50" type="text" class="mid right obg" placeholder="Cidade:" onclick="bgBranco('cidade');"/><br/>
 
-                                        <input name="cep" id="cep" maxlength="8" type="text" class="mid obg" placeholder="CEP:" 
-onclick="bgBranco('cep');"/>
+                                        <input name="cep" id="cep" maxlength="8" type="text" class="mid obg" placeholder="CEP:" onclick="bgBranco('cep');"/>
                                         <span>Estado:</span>
                                         <select>
                                                 <option>AC</option>
