@@ -23,7 +23,8 @@
                 for (i=0; i<tds.length; i++)
                     tds[i].innerHTML = "<input name='"+c[i+2]+"' value='"+tds[i].innerHTML+"' class='obg'>";
                 
-                document.getElementById("editar"+linha).innerHTML = "<button type='submit' onclick='operacao(\""+id+"\", \"editar\")'>Enviar</button> <button type='button' onclick='cancelarEdicao(\""+linha+"\",\""+colunas+"\",\""+id+"\")'>Cancelar</button>";
+                document.getElementById("editar"+linha).innerHTML = "<button type='submit' onclick='operacao(\""+id+"\", \"editar\")'>Enviar</button> <button 
+type='button' onclick='cancelarEdicao(\""+linha+"\",\""+colunas+"\",\""+id+"\")'>Cancelar</button>";
             }
             
             function cancelarEdicao(linha, colunas, id) {
@@ -32,7 +33,8 @@
                 for (i=0; i<tds.length; i++) {
                     tds[i].innerHTML = tds[i].getElementsByTagName('input')[0].defaultValue;
                 }
-                document.getElementById("editar"+linha).innerHTML = "<button id='e' type='button' onclick='formularioEdicao(\""+linha+"\",\""+colunas+"\",\""+id+"\")'>Editar</button>";
+                document.getElementById("editar"+linha).innerHTML = "<button id='e' type='button' onclick='formularioEdicao(\""+linha+"\",\""+colunas+"\",\""+id
++"\")'>Editar</button>";
             }
             
             function mostrarFormulario(nome) {
@@ -170,7 +172,8 @@
                                         <input name="IDENTIDADE" id="ri" maxlength="9" type="text" class="mid right obg" placeholder="RI (identidade):" /><br/>
                                         <input name="FIXO" id="tel" maxlength="10" type="text" class="mid left obg" placeholder="Telefone fixo:" />
                                         <input name="CELULAR" id="cel" maxlength="11" type="text" class="mid right obg" placeholder="Celular:" /><br/> 
-                                        <input name="CARTAO" id="numCartao" maxlength="16" type="text" class="large obg" placeholder="Número do cartão de crédito:" /><br/>
+                                        <input name="CARTAO" id="numCartao" maxlength="16" type="text" class="large obg" placeholder="Número do cartão de crédito:" 
+/><br/>
                                         <span>Bandeira do cartão:</span>
                                         <input name="BANDEIRA" type="radio" value="MasterCard" checked="checked"/><img class="bandeira" src="imagens/master.png"/>
                                         <input name="BANDEIRA" value="Visa"  type="radio"/><img class="bandeira" src="imagens/visa.png"/>
