@@ -237,6 +237,7 @@ public class Tabelas extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String operation = request.getParameter("op"),nomeTabela =  request.getParameter("tabela");
+        System.out.println(operation);
         if (operation.equals("consultar")){
             consultar(nomeTabela,response,request);
         }
