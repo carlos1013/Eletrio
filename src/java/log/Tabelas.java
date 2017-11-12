@@ -71,10 +71,7 @@ public class Tabelas extends HttpServlet {
     }
     
     private void inserir(String nome,HttpServletResponse response,HttpServletRequest request){
-<<<<<<< HEAD
         String id = request.getParameter("id"),pe;
-=======
->>>>>>> 24a8b9e9635ef86a87dfe5491732930c5a4f8427
         switch (nome) {
             case "ADMINISTRADOR":
                 try(PreparedStatement sql = db.prepareStatement("INSERT INTO ADMINISTRADOR (LOGIN,SENHA) VALUES (?,?)")){
@@ -135,10 +132,7 @@ public class Tabelas extends HttpServlet {
     }
     
     private void editar(String nome,HttpServletResponse response,HttpServletRequest request){
-<<<<<<< HEAD
         String id = request.getParameter("id"),pe;
-=======
->>>>>>> 24a8b9e9635ef86a87dfe5491732930c5a4f8427
         switch (nome) {
             case "ADMINISTRADOR":
                 try(PreparedStatement sql = db.prepareStatement("UPDATE ADMINISTRADOR SET LOGIN=?,SENHA=? WHERE ID=?")){
