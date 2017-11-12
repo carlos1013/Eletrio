@@ -130,6 +130,8 @@
                             <div id="inserir">
                                 <div id="CLIENTES" style="display:none">
                                     <form action='Tabelas' method='post' onsubmit='return notNull("clientes");'><div id='clientes'>
+                                        <input name='tabela' style='display:none' value='<%out.print(nome);%>'>
+                                        <input name='op' style='display:none' value='inserir'>
                                         <input name="NOME" id="nome" maxlength="50" class="large obg" type="text" placeholder="Nome:"/><br/>
                                         <input name="ENDERECO" id="endereco" maxlength="50" type="text" class="mid left obg" placeholder="Endereço:"  />
                                         <input name="REFERENCIA" id="referencia" type="text" class="mid right obg" placeholder="Referência:"referencia');" /><br/>
@@ -182,6 +184,8 @@
                                 </div>
                                 <div id="PRODUTO" style="display:none">
                                     <form action='Tabelas' method='post' onsubmit='return notNull("produto");'><div id='produto'>
+                                        <input name='tabela' style='display:none' value='<%out.print(nome);%>'>
+                                        <input name='op' style='display:none' value='inserir'>
                                         <select name="ID_CATEGORIA">
                                             <option value="1" selected>Eletrodomésticos</option>
                                             <option value="2">Informática</option>
@@ -197,6 +201,8 @@
                                 </div>
                                 <div id="ADMINISTRADOR" style="display:none">
                                     <form action='Tabelas' method='post' onsubmit='return notNull("admin");'><div id='admin'>
+                                        <input name='tabela' style='display:none' value='<%out.print(nome);%>'>
+                                        <input name='op' style='display:none' value='inserir'>
                                         <input name="LOGIN" type="text" id="nome" class='obg' placeholder="Nome">
                                         <input name="SENHA" type="password" id="senha" class='obg' placeholder="Senha">
                                         <button type="submit">Enviar</button>
