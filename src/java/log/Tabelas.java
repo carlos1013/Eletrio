@@ -53,7 +53,7 @@ public class Tabelas extends HttpServlet {
     }
     
     private void inserir(String nome,HttpServletResponse response,HttpServletRequest request){
-        String id = request.getParameter("ID"),pe;
+        String id = request.getParameter("id"),pe;
         switch (nome) {
             case "ADMINISTRADOR":
                 pe = "INSERT INTO ADMINISTRADOR (LOGIN,SENHA) VALUES ("+request.getParameter("LOGIN");
@@ -111,7 +111,7 @@ public class Tabelas extends HttpServlet {
     }
     
     private void editar(String nome,HttpServletResponse response,HttpServletRequest request){
-        String id = request.getParameter("ID"),pe;
+        String id = request.getParameter("id"),pe;
         switch (nome) {
             case "ADMINISTRADOR":
                 pe = "UPDATE ADMINISTRADOR SET LOGIN="+ request.getParameter("LOGIN")+",SENHA="+hash(request.getParameter("SENHA"))+ " WHERE ID="+id;
@@ -152,7 +152,9 @@ public class Tabelas extends HttpServlet {
     }
     
     private void remover(String nome,HttpServletResponse response,HttpServletRequest request){
-        int id = Integer.parseInt(request.getParameter("ID"));
+        String t = request.getParameter("id");
+        System.out.println(t);
+        int id = Integer.parseInt(t);
         try(PreparedStatement sql = db.prepareStatement("DELETE FROM " + nome + " WHERE ID=?")){
             sql.setInt(1,id);
             sql.executeUpdate();
@@ -189,8 +191,8 @@ public class Tabelas extends HttpServlet {
             }
             resp.add(aux);
             while(res.next()){
-                aux = "";
-                for (int x=1;x<=qtdCol;x++){
+                aux = res.getString(1);
+                for (int x=2;x<=qtdCol;x++){
                     aux = aux+" "+res.getString(x);
                 }
                 resp.add(aux);
