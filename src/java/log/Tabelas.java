@@ -42,112 +42,155 @@ public class Tabelas extends HttpServlet {
         }
     }
     
-    private String hash(String p){
+    private void erro(HttpServletResponse response){
+        try (PrintWriter out = response.getWriter()) {
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Servlet NewServlet</title>");            
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<h3>DEU MERDA</h3>");
+                out.println("<br>");
+                out.println("</body>");
+                out.println("</html>");
+            }
+            catch(IOException error){
+                
+            }
+    }
+    
+    private long hash(String p){
         String[] pass = p.split("");
         long ant = 5381;
         for(int x=0;x<pass.length;x++){
             if (pass[x].equals('\0')) break;
             ant = (33*ant) + (int)pass[x].charAt(0);
         }
-        return Long.toString(ant);
+        return ant;
     }
     
     private void inserir(String nome,HttpServletResponse response,HttpServletRequest request){
-        String id = request.getParameter("ID"),pe;
         switch (nome) {
             case "ADMINISTRADOR":
-                pe = "INSERT INTO ADMINISTRADOR (LOGIN,SENHA) VALUES ("+request.getParameter("LOGIN");
-                pe+= ","+hash(request.getParameter("SENHA"));
-                pe+= ")";
+                try(PreparedStatement sql = db.prepareStatement("INSERT INTO ADMINISTRADOR (LOGIN,SENHA) VALUES (?,?)")){
+                    sql.setString(1,request.getParameter("LOGIN"));
+                    sql.setLong(2,hash(request.getParameter("SENHA")));
+                    sql.executeUpdate();
+                }
+                catch(Exception err){
+                    erro(response);
+                }
                 break;
             case "CATEGORIA":
-                pe = "INSERT INTO CATEGORIA (DESCRICAO) VALUES ("+request.getParameter("DESCRICAO")+")";
+                try(PreparedStatement sql = db.prepareStatement("INSERT INTO CATEGORIA (DESCRICAO) VALUES (?)")){
+                    sql.setString(1,request.getParameter("DESCRICAO"));
+                    sql.executeUpdate();
+                }
+                catch(Exception err){
+                    erro(response);
+                }
                 break;
             case "CLIENTES":
-                pe = "INSERT INTO CLIENTES (NOME,ENDERECO,REFERENCIA,BAIRRO,CIDADE,CEP,ESTADO,CPF,IDENTIDADE,FIXO,CELULAR,CARTAO,BANDEIRA) VALUES ("+request.getParameter("NOME");
-                pe += ","+request.getParameter("ENDERECO");
-                pe += ","+request.getParameter("REFERENCIA");
-                pe += ","+request.getParameter("BAIRRO");
-                pe += ","+request.getParameter("CIDADE");
-                pe += ","+request.getParameter("CEP");
-                pe += ","+request.getParameter("ESTADO");
-                pe += ","+request.getParameter("CPF");
-                pe += ","+request.getParameter("IDENTIDADE");
-                pe += ","+request.getParameter("FIXO");
-                pe += ","+request.getParameter("CELULAR");
-                pe += ","+request.getParameter("CARTAO");
-                pe += ","+request.getParameter("BANDEIRA")+")";
+                try(PreparedStatement sql = db.prepareStatement("INSERT INTO CLIENTES (NOME,ENDERECO,REFERENCIA,BAIRRO,CIDADE,CEP,ESTADO,CPF,IDENTIDADE,FIXO,CELULAR,CARTAO,BANDEIRA) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)")){
+                    sql.setString(1,request.getParameter("NOME"));
+                    sql.setString(2,request.getParameter("ENDERECO"));
+                    sql.setString(3,request.getParameter("REFERENCIA"));
+                    sql.setString(4,request.getParameter("BAIRRO"));
+                    sql.setString(5,request.getParameter("CIDADE"));
+                    sql.setString(6,request.getParameter("CEP"));
+                    sql.setString(7,request.getParameter("ESTADO"));
+                    sql.setString(8,request.getParameter("CPF"));
+                    sql.setString(9,request.getParameter("IDENTIDADE"));
+                    sql.setString(10,request.getParameter("FIXO"));
+                    sql.setString(11,request.getParameter("CELULAR"));
+                    sql.setString(12,request.getParameter("CARTAO"));
+                    sql.setString(13,request.getParameter("BANDEIRA"));
+                    sql.executeUpdate();
+                }
+                catch(Exception err){
+                    erro(response);
+                }
                 break;
             case "PRODUTO":
-                pe = "INSERT INTO PRODUTO (ID_CATEGORIA,NOME,DESCRICAO,VALOR) VALUES ("+request.getParameter("ID_CATEGORIA");
-                pe += ","+request.getParameter("NOME");
-                pe += ","+request.getParameter("DESCRICAO");
-                pe += ","+request.getParameter("VALOR")+")";
+                try(PreparedStatement sql = db.prepareStatement("INSERT INTO PRODUTO (ID_CATEGORIA,NOME,DESCRICAO,VALOR) VALUES (?,?,?,?)")){
+                    sql.setInt(1,Integer.parseInt(request.getParameter("ID_CATEGORIA")));
+                    sql.setString(2,request.getParameter("NOME"));
+                    sql.setString(3,request.getParameter("DESCRICAO"));
+                    sql.setFloat(4,Float.parseFloat(request.getParameter("VALOR")));
+                    sql.executeUpdate();
+                }
+                catch(Exception err){
+                    erro(response);
+                }
                 break;
             default:
-                pe = " ";
+                erro(response);
                 break;
-        }
-        try(PreparedStatement sql = db.prepareStatement(pe)){
-            sql.executeUpdate();
-        }
-        catch(Exception err){
-            try (PrintWriter out = response.getWriter()) {
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet NewServlet</title>");            
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h3>DEU MERDA</h3>");
-                out.println("<br>");
-                out.println("</body>");
-                out.println("</html>");
-            }
-            catch(IOException error){
-                
-            }
         }
     }
     
     private void editar(String nome,HttpServletResponse response,HttpServletRequest request){
-        String id = request.getParameter("ID"),pe;
         switch (nome) {
             case "ADMINISTRADOR":
-                pe = "UPDATE ADMINISTRADOR SET LOGIN="+ request.getParameter("LOGIN")+",SENHA="+hash(request.getParameter("SENHA"))+ " WHERE ID="+id;
+                try(PreparedStatement sql = db.prepareStatement("UPDATE ADMINISTRADOR SET LOGIN=?,SENHA=? WHERE ID=?")){
+                    sql.setString(1,request.getParameter("LOGIN"));
+                    sql.setLong(2,hash(request.getParameter("SENHA")));
+                    sql.setInt(3,Integer.parseInt(request.getParameter("ID")));
+                    sql.executeUpdate();
+                }
+                catch(Exception err){
+                    erro(response);
+                }
                 break;
             case "CATEGORIA":
-                pe = "UPDATE CATEGORIA SET DESCRICAO="+ request.getParameter("DESCRICAO")+ " WHERE ID="+id;
+                try(PreparedStatement sql = db.prepareStatement("UPDATE CATEGORIA SET DESCRICAO=? WHERE ID=?")){
+                    sql.setString(1,request.getParameter("DESCRICAO"));
+                    sql.setInt(2,Integer.parseInt(request.getParameter("ID")));
+                    sql.executeUpdate();
+                }
+                catch(Exception err){
+                    erro(response);
+                }
                 break;
             case "CLIENTES":
-                pe = "UPDATE CLIENTES SET NOME="+ request.getParameter("NOME")+",ENDERECO="+request.getParameter("ENDERECO")+",REFERENCIA=" +request.getParameter("REFERENCIA")+",BAIRRO="+request.getParameter("BAIRRO")+",CIDADE="+request.getParameter("CIDADE")+",CEP="+request.getParameter("CEP")+",ESTADO="+request.getParameter("ESTADO")+",CPF="+request.getParameter("CPF")+",IDENTIDADE="+request.getParameter("IDENTIDADE")+",FIXO="+request.getParameter("FIXO")+",CELULAR="+request.getParameter("CELULAR")+",CARTAO="+request.getParameter("CARTAO")+",BANDEIRA="+request.getParameter("BANDEIRA")+" WHERE ID="+id;
+                try(PreparedStatement sql = db.prepareStatement("UPDATE CLIENTES SET NOME=?,ENDERECO=?,REFERENCIA=?,BAIRRO=?,CIDADE=?,CEP=?,ESTADO=?,CPF=?,IDENTIDADE=?,FIXO=?,CELULAR=?,CARTAO=?,BANDEIRA=? WHERE ID=?")){
+                    sql.setString(1,request.getParameter("NOME"));
+                    sql.setString(2,request.getParameter("ENDERECO"));
+                    sql.setString(3,request.getParameter("REFERENCIA"));
+                    sql.setString(4,request.getParameter("BAIRRO"));
+                    sql.setString(5,request.getParameter("CIDADE"));
+                    sql.setString(6,request.getParameter("CEP"));
+                    sql.setString(7,request.getParameter("ESTADO"));
+                    sql.setString(8,request.getParameter("CPF"));
+                    sql.setString(9,request.getParameter("IDENTIDADE"));
+                    sql.setString(10,request.getParameter("FIXO"));
+                    sql.setString(11,request.getParameter("CELULAR"));
+                    sql.setString(12,request.getParameter("CARTAO"));
+                    sql.setString(13,request.getParameter("BANDEIRA"));
+                    sql.setInt(14,Integer.parseInt(request.getParameter("ID")));
+                    sql.executeUpdate();
+                }
+                catch(Exception err){
+                    erro(response);
+                }
                 break;
             case "PRODUTO":
-                pe = "UPDATE PRODUTO SET ID_CATEGORIA="+ request.getParameter("ID_CATEGORIA")+",NOME="+request.getParameter("NOME")+",DESCRICAO="+request.getParameter("DESCRICAO")+",VALOR="+request.getParameter("VALOR") +" WHERE ID="+id;
+                try(PreparedStatement sql = db.prepareStatement("UPDATE PRODUTO SET ID_CATEGORIA=?,NOME=?,DESCRICAO=?,VALOR=? WHERE ID=?")){
+                    sql.setInt(1,Integer.parseInt(request.getParameter("ID_CATEGORIA")));
+                    sql.setString(2,request.getParameter("NOME"));
+                    sql.setString(3,request.getParameter("DESCRICAO"));
+                    sql.setFloat(4,Float.parseFloat(request.getParameter("VALOR")));                    
+                    sql.setInt(5,Integer.parseInt(request.getParameter("ID")));
+                    sql.executeUpdate();
+                }
+                catch(Exception err){
+                    erro(response);
+                }
                 break;
             default:
-                pe = " ";
+                erro(response);
                 break;   
-        }
-        try(PreparedStatement sql = db.prepareStatement(pe)){
-            sql.executeUpdate();
-        }
-        catch(Exception err){
-            try (PrintWriter out = response.getWriter()) {
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet NewServlet</title>");            
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h3>DEU MERDA</h3>");
-                out.println("<br>");
-                out.println("</body>");
-                out.println("</html>");
-            }
-            catch(IOException error){
-                
-            }
         }
     }
     
@@ -158,21 +201,7 @@ public class Tabelas extends HttpServlet {
             sql.executeUpdate();
         }
         catch(Exception err){
-            try (PrintWriter out = response.getWriter()) {
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet NewServlet</title>");            
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h3>DEU MERDA</h3>");
-                out.println("<br>");
-                out.println("</body>");
-                out.println("</html>");
-            }
-            catch(IOException error){
-                
-            }
+            erro(response);
         }
     }
     
@@ -199,21 +228,7 @@ public class Tabelas extends HttpServlet {
             request.getRequestDispatcher("selecionar.jsp").forward(request,response);
         } 
         catch (Exception ex) {
-            try (PrintWriter out = response.getWriter()) {
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet NewServlet</title>");            
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h3>DEU MERDA</h3>");
-                out.println("<br>");
-                out.println("</body>");
-                out.println("</html>");
-            }
-            catch(IOException error){
-                
-            }
+            erro(response);
         }
     }
     
