@@ -71,6 +71,7 @@ public class Tabelas extends HttpServlet {
     }
     
     private void inserir(String nome,HttpServletResponse response,HttpServletRequest request){
+
         switch (nome) {
             case "ADMINISTRADOR":
                 try(PreparedStatement sql = db.prepareStatement("INSERT INTO ADMINISTRADOR (LOGIN,SENHA) VALUES (?,?)")){
