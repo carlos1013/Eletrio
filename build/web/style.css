@@ -3,7 +3,7 @@ body {
     font-family:'Raleway', sans-serif;
     line-height:14px;
     font-size:14px;
-    background:#f4f4f4;
+    background: #f9f9f9;
     color:#757575;
 }
 
@@ -15,11 +15,19 @@ body {
     margin-left:-150px;
 }
 
-input, textarea {
+input, textarea, button, select {
     outline:none;
-    padding:10px 2%;
-    border-radius:5px;
-    border:1px solid rgba(0, 0, 0, 0.18);
+    padding:10px 20px;
+    border-radius:2px;
+    border:none;
+    font-family:'Open Sans', sans-serif;
+}
+
+button, #selecionar input[type=submit], #login .submit {
+    color:#fff;
+    cursor:pointer;
+    font-weight:600;
+    text-transform:uppercase;
 }
 
 #login form {
@@ -30,29 +38,148 @@ input, textarea {
     display: block;
     margin-bottom:10px;
     width:96%;
+    box-sizing: border-box;
 }
 
 #login img {
     width:300px;
+    margin-bottom:20px;
 }
 
 input[type=submit] {
     cursor:pointer;
 }
 
-#login .submit {
-    float:right;
-    width:auto;
-    color:rgb(155, 160, 177);
-    background:#363c50;
-    text-transform:uppercase;
-    font-weight:900;
-    padding:10px 15px;
-    font-size:12px;
-    letter-spacing:1px;
+.conteudo {
+    width:90%;
+    margin:auto;
 }
 
-#login .submit:hover {
-    background:#f4c432;
-    color:#9c7707;
+#sair {
+    position:absolute;
+    right:5%;
+    top:20px;
+}
+
+#topo {
+    text-align:center;
+}
+
+#topo img {
+    margin: 50px 0px 20px;
+    max-width:100%;
+}
+
+#topo h3 {
+    background: #d7f5e0;
+    padding:20px;
+    border-radius:3px;
+    margin:0px;
+    font-style:italic;
+    font-weight:300;
+    color: #60a976;
+}
+
+#selecionar {
+    margin:20px 0px;
+}
+
+#selecionar form {
+    display:inline-block;
+}
+
+#selecionar input[type=submit], #inserir button[type=submit], #login .submit {background:#03A9F4;}
+
+#selecionar input[type=submit]:hover, #inserir button[type=submit]:hover, #login .submit:hover {background:#36b5ef;}
+
+#e {background:#FF9800;}
+#e:hover {background:#ffac31;}
+
+#r,#sair button {background:#F44336;}
+#r:hover,#sair button:hover {background:#ff5d51;}
+
+#i, .btns button[type=submit] {background:#8BC34A;}
+#i:hover, .btns button[type=submit]:hover {background:#9fd660;}
+
+table {
+    max-width:100%;
+    overflow: auto;
+    display:block;
+}
+
+th {
+    background:rgba(0, 0, 0, 0.05);
+    padding:20px;
+}
+
+td {
+    text-align:center;
+    padding:20px;
+    background:rgba(0, 0, 0, 0.02);
+}
+
+td input {
+    float:left;
+}
+
+.btns button[type=submit] {
+    margin-bottom:10px;
+}
+
+.btns button:hover, #inserir button:hover {
+    background:rgba(0, 0, 0, 0.18);
+}
+
+#ru {
+    margin-bottom:20px;
+}
+
+#inserir {
+    margin-top:20px;
+}
+
+#inserir input {
+    margin-bottom:1%;
+    padding:10px 2%;
+}
+
+.large {
+    width:96%;
+}
+
+.mid {
+    width:45.5%;
+}
+
+.left {
+    float:left;
+}
+
+.right {
+    float:right;
+}
+
+#inserir span {
+    margin-left:1%;
+}
+
+.bandeira {
+    height:16px;
+}
+
+#inserir button {
+    margin-top:20px;
+}
+
+#tabela h1 {
+    background:#3F51B5;
+    padding:20px;
+    border-radius:2px;
+    color:#fff;
+    font-weight:300;
+    letter-spacing:2px;
+    font-size:22px;
+    color:#ffffff;
+    text-align:center;
+    display:inline-block;
 }

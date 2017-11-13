@@ -215,15 +215,15 @@ public class Tabelas extends HttpServlet {
             ResultSet res = sql.executeQuery();
             ResultSetMetaData resMeta = res.getMetaData();
             int qtdCol = resMeta.getColumnCount();
-            aux = aux+" "+Integer.toString(qtdCol);
+            aux = aux+"¨"+Integer.toString(qtdCol);
             for (int x=1;x<=qtdCol;x++){
-                aux = aux+" "+resMeta.getColumnName(x);
+                aux = aux+"¨"+resMeta.getColumnName(x);
             }
             resp.add(aux);
             while(res.next()){
                 aux = res.getString(1);
                 for (int x=2;x<=qtdCol;x++){
-                    aux = aux+" "+res.getString(x);
+                    aux = aux+"¨"+res.getString(x);
                 }
                 resp.add(aux);
             }

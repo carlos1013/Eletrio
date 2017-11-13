@@ -7,7 +7,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Admin</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css" type="text/css"/>
+        <link rel="icon" href="images/favicon.png">
+
+        <title>Loja DW | Admin</title>
         <script>
             function operacao(ID, operacao) {
                 var id = document.getElementById('id');
@@ -17,28 +21,38 @@
             }
             
             function formularioEdicao(linha, colunas, id) {
-                var tds = document.getElementsByClassName("linha"+linha);
-                var c = colunas.split(" ");
+                var e = document.getElementsByClassName("editando")[0];
+                if (e) {
+                    e.setAttribute("class","");
+                    cancelarEdicao(e.getAttribute("id"),colunas,e.getAttribute("idRow"));
+                }
+                var tds = document.getElementsByClassName(linha);
+                var c = colunas.split("¨");
                 var i;
                 for (i=0; i<tds.length; i++)
-                    tds[i].innerHTML = "<input name='"+c[i+2]+"' value='"+tds[i].innerHTML+"' class='obg'>";
+                    tds[i].innerHTML = "<input name='"+c[i+3]+"' value='"+tds[i].innerHTML+"' class='"+c[i+3]+" obg'>";
                 
-                document.getElementById("editar"+linha).innerHTML = "<button type='submit' onclick='operacao(\""+id+"\", \"editar\")'>Enviar</button> <button type='button' onclick='cancelarEdicao(\""+linha+"\",\""+colunas+"\",\""+id+"\")'>Cancelar</button>";
+                var l = document.getElementById(linha);
+                l.setAttribute("class","editando");
+                l.getElementsByClassName('btns')[0].innerHTML = "<button id='i' type='submit' onclick='operacao(\""+id+"\", \"editar\")'>Enviar</button> <button type='button' onclick='cancelarEdicao(\""+linha+"\",\""+colunas+"\",\""+id+"\")'>Cancelar</button>";
             }
             
             function cancelarEdicao(linha, colunas, id) {
-                var tds = document.getElementsByClassName("linha"+linha);
+                var tds = document.getElementsByClassName(linha);
                 var i;
                 for (i=0; i<tds.length; i++) {
                     tds[i].innerHTML = tds[i].getElementsByTagName('input')[0].defaultValue;
                 }
-                document.getElementById("editar"+linha).innerHTML = "<button id='e' type='button' onclick='formularioEdicao(\""+linha+"\",\""+colunas+"\",\""+id+"\")'>Editar</button>";
+                var l = document.getElementById(linha);
+                l.setAttribute("class","");
+                l.getElementsByClassName('btns')[0].innerHTML = "<button id='e' type='button' onclick='formularioEdicao(\""+linha+"\",\""+colunas+"\",\""+id+"\")'>Editar</button>";
             }
             
             function mostrarFormulario(nome) {
                 var div = document.getElementById(nome);
                 div.style.display = 'block';
             }
+            
             function cancelar(nome) {
                 var div = document.getElementById(nome);
                 var inputs = div.getElementsByClassName('obg');
@@ -50,6 +64,7 @@
                 }
                 div.style.display = 'none';
             }
+
             function notNull(form) {
                 var inputs = document.getElementById(form).getElementsByClassName('obg');
                 var i;
@@ -67,9 +82,61 @@
                 else 
                     return confirm("Confirmar alterações?");
             }
+
+            function campoNum(form, campo, num) {
+                var c = document.getElementById(form).getElementsByClassName(campo)[0];
+                var exp = /[^0-9]/g;
+                if (c.value.length < num || exp.test(c.value)) {
+                        c.style.backgroundColor = "#f7dcdc";
+                        alert("Preencha o campo "+campo+" corretamente.");
+                        return false;
+                }
+                return true;
+            }
+            
+            function validarCliente(form) {
+                return (campoNum(form,'CEP',8) && campoNum(form,'CPF',11) && campoNum(form,'IDENTIDADE',9) && campoNum(form,'CARTAO',16) && campoNum(form,'FIXO',10) && campoNum(form,'CELULAR',11));
+            }
+            
+            function validarValor(form) {
+                var v = document.getElementById(form).getElementsByClassName("VALOR")[0];
+                var exp = /^\d+(\.\d{2})?$/g;
+                var valido = exp.test(v.value);
+                if (!valido) {
+                    v.style.backgroundColor = "#f7dcdc";
+                    alert("Preencha o campo VALOR corretamente.");
+                    return false;
+                }
+                return true;
+            }
+            
+            function validarCategoria(form) {
+                var v = document.getElementById(form).getElementsByClassName("ID_CATEGORIA")[0];
+                var exp = /[^1-4]/g;
+                if(exp.test(v.value)) {
+                    v.style.backgroundColor = "#f7dcdc";
+                    alert("Escolha uma categoria válida.");
+                    return false;
+                }
+                return true;
+            }
+            
+            function validarFormulario(tabela, form) {
+                if(!tabela.localeCompare("CLIENTES"))
+                    return (validarCliente(form) && notNull(form));
+                if (!tabela.localeCompare("PRODUTO"))
+                    return (validarValor(form) && validarCategoria(form) && notNull(form));
+                else
+                    return notNull(form);
+            }
+
         </script>
     </head>
     <body>
+        <form id="sair" action='' method='post'>
+            <input type="hidden" value="sair">
+            <button>Sair</button>
+        </form>
         <div class="conteudo">
             <div id="topo">
                 <img src="images/logo.png">
@@ -94,124 +161,140 @@
                     try {
                         List<String> r = (List)request.getAttribute("r");
                         String colunas = r.get(0);
-                        String[] row = colunas.split(" ");
+                        String[] row = colunas.split("¨");
                         String nome = row[0];
                         int qtAtt = Integer.parseInt(row[1]);
                         out.println("<h1>"+nome+"</h1>");
-                        out.println("<form action='Tabelas' method='post' onsubmit='return notNull(\"ru\");'><div id='ru'>");
+                        out.println("<form action='Tabelas' method='post' onsubmit='return validarFormulario(\""+nome+"\", \"ru\");'><div id='ru'>");
                         out.println("<input name='tabela' style='display:none' value='"+nome+"'>");
                         out.println("<input id='id'  name='id' style='display:none' value=''>");
                         out.println("<input id='op' name='op' class='obg' style='display:none' value=''>");
                         out.println("<table><tr>");
-                        for (int i = 2; i < qtAtt+2; i++) {
+                        for (int i = 3; i < qtAtt+2; i++) {
                             out.println("<th>"+row[i]+"</th>");
                         }
-                        out.println("<th>Editar</th><th>Remover</th></tr>");
+                        
+                        if(nome.equals("CLIENTES") || nome.equals("PRODUTO") || nome.equals("ADMINISTRADOR"))
+                            out.println("<th>Editar</th><th>Remover</th>");
+                        else if (nome.equals("COMPRAS"))
+                            out.println("<th>Remover</th>");
+                        
+                        out.println("</tr>");
                         
                         for (int i = 1; i < r.size(); i++) {
-                            row = r.get(i).split(" ");
-                            out.println("<tr id='linha"+i+"'>");
-                            for (int j = 0; j < qtAtt; j++) {
-                                out.println("<td class='linha"+i+"'>"+row[j]+"</td>");
-                            }
-                            %>
-                            <td id="<% out.print("editar"+i); %>">
-                                <button id='e' type='button' onclick="formularioEdicao(<% out.print("'"+i+"', '"+colunas+"','"+row[0]+"'"); %>)">Editar</button> 
-                            </td>
-                            <td><button id='r' type='submit' onclick="operacao(<% out.print("'"+row[0]+"', 'remover'"); %>)">Remover</button> </td>
-                            </tr>
-                        <%}//for
-                        out.println("</table></div></form>");
-                        if(nome.equals("CLIENTES") || nome.equals("PRODUTO") || nome.equals("ADMINISTRADOR")) {
-                        %>
-                        
-                            <button id='i' type='button' onClick='mostrarFormulario("<% out.print(nome); %>")'>Inserir</button>
+                            row = r.get(i).split("¨");
+                            out.println("<tr id='linha"+i+"' idRow='"+row[0]+"'>");
 
-                            <div id="inserir">
-                                <div id="CLIENTES" style="display:none">
-                                    <form action='Tabelas' method='post' onsubmit='return notNull("clientes");'><div id='clientes'>
-                                        <input name='tabela' style='display:none' value='<%out.print(nome);%>'>
-                                        <input name='op' style='display:none' value='inserir'>
-                                        <input name="NOME" id="nome" maxlength="50" class="large obg" type="text" placeholder="Nome:"/><br/>
-                                        <input name="ENDERECO" id="endereco" maxlength="50" type="text" class="mid left obg" placeholder="Endereço:"  />
-                                        <input name="REFERENCIA" id="referencia" type="text" class="mid right obg" placeholder="Referência:"referencia');" /><br/>
-                                        <input name="BAIRRO" id="bairro" maxlength="50" type="text" class="mid left obg" placeholder="Bairro:"/>
-                                        <input name="CIDADE" id="cidade" maxlength="50" type="text" class="mid right obg" placeholder="Cidade:"/><br/>
-                                        <input name="CEP" id="cep" maxlength="8" type="text" class="mid obg" placeholder="CEP:"/>
-                                        <span>Estado:</span>
-                                        <select name='ESTADO'>
-                                                <option value='AC'>AC</option>
-                                                <option value='AL'>AL</option>
-                                                <option value='AP'>AP</option>
-                                                <option value='AM'>AM</option>
-                                                <option value='BA'>BA</option>
-                                                <option value='CE'>CE</option>
-                                                <option value='DF'>DF</option>
-                                                <option value='ES'>ES</option>
-                                                <option value='GO'>GO</option>
-                                                <option value='MA'>MA</option>
-                                                <option value='MT'>MT</option>
-                                                <option value='MS'>MS</option>
-                                                <option value='MG'>MG</option>
-                                                <option value='PA'>PA</option>
-                                                <option value='PB'>PB</option>
-                                                <option value='PR'>PR</option>
-                                                <option value='PE'>PE</option>
-                                                <option value='PI'>PI</option>
-                                                <option value='RJ'>RJ</option>
-                                                <option value='RN'>RN</option>
-                                                <option value='RS'>RS</option>
-                                                <option value='RO'>RO</option>
-                                                <option value='RR'>RR</option>
-                                                <option value='SC'>SC</option>
-                                                <option value='SP'>SP</option>
-                                                <option value='SE'>SE</option>
-                                                <option value='TO'>TO</option>
-                                        </select><br/>
-                                        <input name="CPF" id="cpf" maxlength="11" type="text" class="mid left obg" placeholder="CPF:"/>
-                                        <input name="IDENTIDADE" id="ri" maxlength="9" type="text" class="mid right obg" placeholder="RI (identidade):" /><br/>
-                                        <input name="FIXO" id="tel" maxlength="10" type="text" class="mid left obg" placeholder="Telefone fixo:" />
-                                        <input name="CELULAR" id="cel" maxlength="11" type="text" class="mid right obg" placeholder="Celular:" /><br/> 
-                                        <input name="CARTAO" id="numCartao" maxlength="16" type="text" class="large obg" placeholder="Número do cartão de crédito:" /><br/>
-                                        <span>Bandeira do cartão:</span>
-                                        <input name="BANDEIRA" type="radio" value="MasterCard" checked="checked"/><img class="bandeira" src="imagens/master.png"/>
-                                        <input name="BANDEIRA" value="Visa"  type="radio"/><img class="bandeira" src="imagens/visa.png"/>
-                                        <input name="BANDEIRA" value="AmericanExpress"  type="radio"/><img class="bandeira" src="imagens/ae.png"/>
-                                        <input name="BANDEIRA" value="Elo"  type="radio"/><img class="bandeira" src="imagens/elo.png"/><br/>
-                                        <button type="submit">Enviar</button>
-                                        <button type="button" onClick="this.form.reset();cancelar('<% out.print(nome); %>');">Cancelar</button>
-                                    </div></form>
-                                </div>
-                                <div id="PRODUTO" style="display:none">
-                                    <form action='Tabelas' method='post' onsubmit='return notNull("produto");'><div id='produto'>
-                                        <input name='tabela' style='display:none' value='<%out.print(nome);%>'>
-                                        <input name='op' style='display:none' value='inserir'>
-                                        <select name="ID_CATEGORIA">
-                                            <option value="1" selected>Eletrodomésticos</option>
-                                            <option value="2">Informática</option>
-                                            <option value="3">Eletroportáteis</option>
-                                            <option value="4">Smartphones</option>
-                                        </select>
-                                        <input name="NOME" type="text" id="nome" class='obg' placeholder="Nome" >
-                                        <input name="DESCRICAO" type="text" id="descricao" class='obg' placeholder="Descrição" >
-                                        <input name="VALOR" type="text" id="valor" class='obg' placeholder="Valor"  >
-                                        <button type="submit">Enviar</button>
-                                        <button type="button" onClick="this.form.reset();cancelar('<% out.print(nome); %>');">Cancelar</button>
-                                    </div></form>
-                                </div>
-                                <div id="ADMINISTRADOR" style="display:none">
-                                    <form action='Tabelas' method='post' onsubmit='return notNull("admin");'><div id='admin'>
-                                        <input name='tabela' style='display:none' value='<%out.print(nome);%>'>
-                                        <input name='op' style='display:none' value='inserir'>
-                                        <input name="LOGIN" type="text" id="nome" class='obg' placeholder="Nome">
-                                        <input name="SENHA" type="password" id="senha" class='obg' placeholder="Senha">
-                                        <button type="submit">Enviar</button>
-                                        <button type="button" onClick="this.form.reset();cancelar('<% out.print(nome); %>');">Cancelar</button>
-                                    </div></form>
-                                </div>
+                            for (int j = 1; j < qtAtt; j++) {
+                                out.println("<td class='linha"+i+"'>"+row[j]+"</td>");
+                            }                            
+                            if(nome.equals("CLIENTES") || nome.equals("PRODUTO") || nome.equals("ADMINISTRADOR")) {
+                                out.print("<td class='btns'><button id='e' type='button' onclick='formularioEdicao(\"linha"+i+"\", \""+colunas+"\", \""+row[0]+"\")'>Editar</button></td>");
+                                out.print("<td><button id='r' type='submit' onclick='operacao(\""+row[0]+"\", \"remover\")'>Remover</button></td>");
+                            }
+                            else if (nome.equals("COMPRAS"))
+                                out.print("<td><button id='r' type='submit' onclick='operacao(\""+row[0]+"\", \"remover\")'>Remover</button></td>");
+
+                            out.println("</tr>");
+                        }//for
+                        
+                        out.println("</table></div></form>");
+                        if(nome.equals("CLIENTES")) {
+                        %>
+                            <button id='i' type='button' onClick='mostrarFormulario("inserir")'>Inserir</button>
+                            <div id="inserir" style="display:none">
+                                <form action='Tabelas' method='post' onsubmit='return validarFormulario("CLIENTES", "inserir");'>
+                                    <input name='tabela' style='display:none' value='CLIENTES'>
+                                    <input name='op' style='display:none' value='inserir'>
+                                    <input name="NOME" id="nome" maxlength="50" class="large obg" type="text" placeholder="Nome:"/><br/>
+                                    <input name="ENDERECO" id="endereco" maxlength="50" type="text" class="mid left obg" placeholder="Endereço:"  />
+                                    <input name="REFERENCIA" id="referencia" type="text" class="mid right obg" placeholder="Referência:"referencia');" /><br/>
+                                    <input name="BAIRRO" id="bairro" maxlength="50" type="text" class="mid left obg" placeholder="Bairro:"/>
+                                    <input name="CIDADE" id="cidade" maxlength="50" type="text" class="mid right obg" placeholder="Cidade:"/><br/>
+                                    <input name="CEP" id="cep" maxlength="8" type="text" class="mid obg" placeholder="CEP:"/>
+                                    <span>Estado:</span>
+                                    <select name='ESTADO'>
+                                            <option value='AC'>AC</option>
+                                            <option value='AL'>AL</option>
+                                            <option value='AP'>AP</option>
+                                            <option value='AM'>AM</option>
+                                            <option value='BA'>BA</option>
+                                            <option value='CE'>CE</option>
+                                            <option value='DF'>DF</option>
+                                            <option value='ES'>ES</option>
+                                            <option value='GO'>GO</option>
+                                            <option value='MA'>MA</option>
+                                            <option value='MT'>MT</option>
+                                            <option value='MS'>MS</option>
+                                            <option value='MG'>MG</option>
+                                            <option value='PA'>PA</option>
+                                            <option value='PB'>PB</option>
+                                            <option value='PR'>PR</option>
+                                            <option value='PE'>PE</option>
+                                            <option value='PI'>PI</option>
+                                            <option value='RJ'>RJ</option>
+                                            <option value='RN'>RN</option>
+                                            <option value='RS'>RS</option>
+                                            <option value='RO'>RO</option>
+                                            <option value='RR'>RR</option>
+                                            <option value='SC'>SC</option>
+                                            <option value='SP'>SP</option>
+                                            <option value='SE'>SE</option>
+                                            <option value='TO'>TO</option>
+                                    </select><br/>
+                                    <input name="CPF" id="cpf" maxlength="11" type="text" class="mid left obg" placeholder="CPF:"/>
+                                    <input name="IDENTIDADE" id="ri" maxlength="9" type="text" class="mid right obg" placeholder="RI (identidade):" /><br/>
+                                    <input name="FIXO" id="tel" maxlength="10" type="text" class="mid left obg" placeholder="Telefone fixo:" />
+                                    <input name="CELULAR" id="cel" maxlength="11" type="text" class="mid right obg" placeholder="Celular:" /><br/> 
+                                    <input name="CARTAO" id="numCartao" maxlength="16" type="text" class="large obg" placeholder="Número do cartão de crédito:" /><br/>
+                                    <span>Bandeira do cartão:</span>
+                                    <input name="BANDEIRA" type="radio" value="MasterCard" checked="checked"/><img class="bandeira" src="images/master.png"/>
+                                    <input name="BANDEIRA" value="Visa"  type="radio"/><img class="bandeira" src="images/visa.png"/>
+                                    <input name="BANDEIRA" value="AmericanExpress"  type="radio"/><img class="bandeira" src="images/ae.png"/>
+                                    <input name="BANDEIRA" value="Elo"  type="radio"/><img class="bandeira" src="images/elo.png"/><br/>
+                                    <button type="submit">Enviar</button>
+                                    <button type="button" onClick="this.form.reset();cancelar('inserir');">Cancelar</button>
+                                </form>
                             </div>
                         <%
-                        }//if
+                        }//if CLIENTES
+                        else if (nome.equals("PRODUTO")) { 
+                        %>
+                            <button id='i' type='button' onClick='mostrarFormulario("inserir")'>Inserir</button>
+                            <div id="inserir" style="display:none">
+                                <form action='Tabelas' method='post' onsubmit='return validarFormulario("PRODUTO", "inserir");'>
+                                    <input name='tabela' style='display:none' value='PRODUTO'>
+                                    <input name='op' style='display:none' value='inserir'>
+                                    <select name="ID_CATEGORIA">
+                                        <option value="1" selected>Eletrodomésticos</option>
+                                        <option value="2">Informática</option>
+                                        <option value="3">Eletroportáteis</option>
+                                        <option value="4">Smartphones</option>
+                                    </select>
+                                    <input name="NOME" type="text" id="nome" class='obg' placeholder="Nome" >
+                                    <input name="DESCRICAO" type="text" id="descricao" class='obg' placeholder="Descrição" >
+                                    <input name="VALOR" type="text" id="valor" class='obg' placeholder="Valor"  >
+                                    <button type="submit">Enviar</button>
+                                    <button type="button" onClick="this.form.reset();cancelar('inserir');">Cancelar</button>
+                                </form>
+                            </div>
+                        <% 
+                        }  //if PRODUTO
+                        else if (nome.equals("ADMINISTRADOR")) {
+                        %>
+                            <button id='i' type='button' onClick='mostrarFormulario("inserir")'>Inserir</button>
+                            <div id="inserir" style="display:none">
+                                <form action='Tabelas' method='post' onsubmit='return validarFormulario("ADMINISTRADOR", "inserir");'>
+                                    <input name='tabela' style='display:none' value='ADMINISTRADOR'>
+                                    <input name='op' style='display:none' value='inserir'>
+                                    <input name="LOGIN" type="text" id="nome" class='obg' placeholder="Nome">
+                                    <input name="SENHA" type="password" id="senha" class='obg' placeholder="Senha">
+                                    <button type="submit">Enviar</button>
+                                    <button type="button" onClick="this.form.reset();cancelar('inserir');">Cancelar</button>
+                                </form>
+                            </div>
+                        <%
+                        }//if ADMINISTRADOR
                     } //try
                     catch(Exception e) {}
                 %>
