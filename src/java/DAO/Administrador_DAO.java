@@ -88,4 +88,17 @@ public class Administrador_DAO {
             throw new RuntimeException();
         }
     }
+    
+    public boolean verifica_existencia(Administrador admin){
+        Adapt_Conexao conexao = new Adapt_Conexao();
+        try (PreparedStatement sql = conexao.conectar().prepareStatement("SELECT * FROM ADMINISTRADOR WHERE LOGIN=? AND SENHA=?")){
+            sql.setString(1,admin.getLogin());
+            sql.setLong(2,hash(admin.getSenha()));
+            ResultSet res = sql.executeQuery();
+            return res.next();
+        } 
+        catch (Exception ex) {
+            throw new RuntimeException();
+        }
+    }
 }
