@@ -13,39 +13,87 @@
 
         <title>Loja DW | Admin</title>
         <script>
-            function operacao(ID, operacao) {
+            function operacao(ID, operacao, linha, colunas) {
                 var id = document.getElementById('id');
                 var op = document.getElementById('op');
                 id.setAttribute('value', ID);
                 op.setAttribute('value', operacao);
-            }
-            
-            function formularioEdicao(linha, colunas, id) {
                 var e = document.getElementsByClassName("editando")[0];
                 if (e) {
                     e.setAttribute("class","");
                     cancelarEdicao(e.getAttribute("id"),colunas,e.getAttribute("idRow"));
                 }
+                if(!operacao.localeCompare('editar')) {
+                    formularioEdicao(linha, colunas, ID);
+                }
+            }
+            
+            function formularioEdicao(linha, colunas, id) {
                 var tds = document.getElementsByClassName(linha);
                 var c = colunas.split("¨");
                 var i;
-                for (i=0; i<tds.length; i++)
-                    tds[i].innerHTML = "<input name='"+c[i+3]+"' value='"+tds[i].innerHTML+"' class='"+c[i+3]+" obg'>";
+                for (i=0; i<tds.length; i++) {
+                    if(!c[i+3].localeCompare('ESTADO'))
+                        tds[i].innerHTML = estados();
+                    else
+                        tds[i].innerHTML = "<input name='"+c[i+3]+"' value='"+tds[i].innerHTML+"' class='"+c[i+3]+" obg'>";
+                }
+                
+                if(!c[0].localeCompare('CLIENTES')) {
+                    limit('CEP',8);
+                    limit('CPF',11);
+                    limit('IDENTIDADE',9);
+                    limit('CARTAO',16);
+                    limit('FIXO',10);
+                    limit('CELULAR',11);
+                }
                 
                 var l = document.getElementById(linha);
                 l.setAttribute("class","editando");
-                l.getElementsByClassName('btns')[0].innerHTML = "<button id='i' type='submit' onclick='operacao(\""+id+"\", \"editar\")'>Enviar</button> <button type='button' onclick='cancelarEdicao(\""+linha+"\",\""+colunas+"\",\""+id+"\")'>Cancelar</button>";
+                l.getElementsByClassName('btns')[0].innerHTML = "<button id='i' type='submit'>Enviar</button> <button type='button' onclick='cancelarEdicao(\""+linha+"\",\""+colunas+"\",\""+id+"\")'>Cancelar</button>";
+            }
+            
+            function estados() {
+                return("<select name='ESTADO'>"+
+                            "<option value='AC'>AC</option>"+
+                            "<option value='AL'>AL</option>"+
+                            "<option value='AP'>AP</option>"+
+                            "<option value='AM'>AM</option>"+
+                            "<option value='BA'>BA</option>"+
+                            "<option value='CE'>CE</option>"+
+                            "<option value='DF'>DF</option>"+
+                            "<option value='ES'>ES</option>"+
+                            "<option value='GO'>GO</option>"+
+                            "<option value='MA'>MA</option>"+
+                            "<option value='MT'>MT</option>"+
+                            "<option value='MS'>MS</option>"+
+                            "<option value='MG'>MG</option>"+
+                            "<option value='PA'>PA</option>"+
+                            "<option value='PB'>PB</option>"+
+                            "<option value='PR'>PR</option>"+
+                            "<option value='PE'>PE</option>"+
+                            "<option value='PI'>PI</option>"+
+                            "<option value='RJ'>RJ</option>"+
+                            "<option value='RN'>RN</option>"+
+                            "<option value='RS'>RS</option>"+
+                            "<option value='RO'>RO</option>"+
+                            "<option value='RR'>RR</option>"+
+                            "<option value='SC'>SC</option>"+
+                            "<option value='SP'>SP</option>"+
+                            "<option value='SE'>SE</option>"+
+                            "<option value='TO'>TO</option>"+
+                        "</select>");
             }
             
             function cancelarEdicao(linha, colunas, id) {
                 var tds = document.getElementsByClassName(linha);
                 var i;
-                for (i=0; i<tds.length; i++) {
+                for (i=0; i<tds.length; i++) 
                     tds[i].innerHTML = tds[i].getElementsByTagName('input')[0].defaultValue;
-                }
+                
                 var l = document.getElementById(linha);
                 l.setAttribute("class","");
-                l.getElementsByClassName('btns')[0].innerHTML = "<button id='e' type='button' onclick='formularioEdicao(\""+linha+"\",\""+colunas+"\",\""+id+"\")'>Editar</button>";
+                l.getElementsByClassName('btns')[0].innerHTML = "<button id='e' type='button' onclick='operacao(\""+id+"\", \"editar\", \""+linha+"\",\""+colunas+"\")'>Editar</button>";
             }
             
             function mostrarFormulario(nome) {
@@ -63,6 +111,13 @@
                   }
                 }
                 div.style.display = 'none';
+            }
+            
+            function limit(name, n) {
+                var c = document.getElementsByClassName(name);
+                var i;
+                for (i=0; i<c.length; i++)
+                    c[i].setAttribute("maxlength", n);
             }
 
             function notNull(form) {
@@ -85,11 +140,13 @@
 
             function campoNum(form, campo, num) {
                 var c = document.getElementById(form).getElementsByClassName(campo)[0];
-                var exp = /[^0-9]/g;
-                if (c.value.length < num || exp.test(c.value)) {
-                        c.style.backgroundColor = "#f7dcdc";
-                        alert("Preencha o campo "+campo+" corretamente.");
-                        return false;
+                if(c) {
+                    var exp = /[^0-9]/g;
+                    if (c.value.length < num || exp.test(c.value)) {
+                            c.style.backgroundColor = "#f7dcdc";
+                            alert("Preencha o campo "+campo+" corretamente.");
+                            return false;
+                    }
                 }
                 return true;
             }
@@ -100,31 +157,35 @@
             
             function validarValor(form) {
                 var v = document.getElementById(form).getElementsByClassName("VALOR")[0];
-                var exp = /^\d+(\.\d{2})?$/g;
-                var valido = exp.test(v.value);
-                if (!valido) {
-                    v.style.backgroundColor = "#f7dcdc";
-                    alert("Preencha o campo VALOR corretamente.");
-                    return false;
+                if (v) {
+                    var exp = /^\d+(\.\d{2})?$/g;
+                    var valido = exp.test(v.value);
+                    if (!valido) {
+                        v.style.backgroundColor = "#f7dcdc";
+                        alert("Preencha o campo VALOR corretamente.");
+                        return false;
+                    }
                 }
                 return true;
             }
             
             function validarCategoria(form) {
                 var v = document.getElementById(form).getElementsByClassName("ID_CATEGORIA")[0];
-                var exp = /[^1-4]/g;
-                if(exp.test(v.value)) {
-                    v.style.backgroundColor = "#f7dcdc";
-                    alert("Escolha uma categoria válida.");
-                    return false;
+                if(v) {
+                    var exp = /[^1-4]/g;
+                    if(exp.test(v.value)) {
+                        v.style.backgroundColor = "#f7dcdc";
+                        alert("Escolha uma categoria válida.");
+                        return false;
+                    }
                 }
                 return true;
             }
             
             function validarFormulario(tabela, form) {
-                if(!tabela.localeCompare("CLIENTES"))
-                    return (validarCliente(form) && notNull(form));
-                if (!tabela.localeCompare("PRODUTO"))
+                if(!tabela.localeCompare("CLIENTES")) {
+                    return (validarCliente(form) && notNull(form));alert('valida');}
+                else if (!tabela.localeCompare("PRODUTO"))
                     return (validarValor(form) && validarCategoria(form) && notNull(form));
                 else
                     return notNull(form);
@@ -133,7 +194,7 @@
         </script>
     </head>
     <body>
-        <form id="sair" action='' method='post'>
+        <form id="sair" action='Logout_Usuario' method='post'>
             <input type="hidden" value="sair">
             <button>Sair</button>
         </form>
@@ -189,11 +250,11 @@
                                 out.println("<td class='linha"+i+"'>"+row[j]+"</td>");
                             }                            
                             if(nome.equals("CLIENTES") || nome.equals("PRODUTO") || nome.equals("ADMINISTRADOR")) {
-                                out.print("<td class='btns'><button id='e' type='button' onclick='formularioEdicao(\"linha"+i+"\", \""+colunas+"\", \""+row[0]+"\")'>Editar</button></td>");
-                                out.print("<td><button id='r' type='submit' onclick='operacao(\""+row[0]+"\", \"remover\")'>Remover</button></td>");
+                                out.print("<td class='btns'><button id='e' type='button' onclick='operacao(\""+row[0]+"\", \"editar\",\"linha"+i+"\", \""+colunas+"\")'>Editar</button></td>");
+                                out.print("<td><button id='r' type='submit' onclick='operacao(\""+row[0]+"\", \"remover\",\"linha"+i+"\", \""+colunas+"\")'>Remover</button></td>");
                             }
                             else if (nome.equals("COMPRAS"))
-                                out.print("<td><button id='r' type='submit' onclick='operacao(\""+row[0]+"\", \"remover\")'>Remover</button></td>");
+                                out.print("<td><button id='r' type='submit' onclick='operacao(\""+row[0]+"\", \"remover\",\"linha"+i+"\", \""+colunas+"\")'>Remover</button></td>");
 
                             out.println("</tr>");
                         }//for
@@ -211,42 +272,13 @@
                                     <input name="REFERENCIA" id="referencia" type="text" class="mid right obg" placeholder="Referência:"referencia');" /><br/>
                                     <input name="BAIRRO" id="bairro" maxlength="50" type="text" class="mid left obg" placeholder="Bairro:"/>
                                     <input name="CIDADE" id="cidade" maxlength="50" type="text" class="mid right obg" placeholder="Cidade:"/><br/>
-                                    <input name="CEP" id="cep" maxlength="8" type="text" class="mid obg" placeholder="CEP:"/>
-                                    <span>Estado:</span>
-                                    <select name='ESTADO'>
-                                            <option value='AC'>AC</option>
-                                            <option value='AL'>AL</option>
-                                            <option value='AP'>AP</option>
-                                            <option value='AM'>AM</option>
-                                            <option value='BA'>BA</option>
-                                            <option value='CE'>CE</option>
-                                            <option value='DF'>DF</option>
-                                            <option value='ES'>ES</option>
-                                            <option value='GO'>GO</option>
-                                            <option value='MA'>MA</option>
-                                            <option value='MT'>MT</option>
-                                            <option value='MS'>MS</option>
-                                            <option value='MG'>MG</option>
-                                            <option value='PA'>PA</option>
-                                            <option value='PB'>PB</option>
-                                            <option value='PR'>PR</option>
-                                            <option value='PE'>PE</option>
-                                            <option value='PI'>PI</option>
-                                            <option value='RJ'>RJ</option>
-                                            <option value='RN'>RN</option>
-                                            <option value='RS'>RS</option>
-                                            <option value='RO'>RO</option>
-                                            <option value='RR'>RR</option>
-                                            <option value='SC'>SC</option>
-                                            <option value='SP'>SP</option>
-                                            <option value='SE'>SE</option>
-                                            <option value='TO'>TO</option>
-                                    </select><br/>
-                                    <input name="CPF" id="cpf" maxlength="11" type="text" class="mid left obg" placeholder="CPF:"/>
-                                    <input name="IDENTIDADE" id="ri" maxlength="9" type="text" class="mid right obg" placeholder="RI (identidade):" /><br/>
-                                    <input name="FIXO" id="tel" maxlength="10" type="text" class="mid left obg" placeholder="Telefone fixo:" />
-                                    <input name="CELULAR" id="cel" maxlength="11" type="text" class="mid right obg" placeholder="Celular:" /><br/> 
-                                    <input name="CARTAO" id="numCartao" maxlength="16" type="text" class="large obg" placeholder="Número do cartão de crédito:" /><br/>
+                                    <input name="CEP" id="cep" maxlength="8" type="text" class="CEP mid obg" placeholder="CEP:"/>
+                                    <span>Estado:</span><script>document.write(estados());</script><br/>
+                                    <input name="CPF" id="cpf" maxlength="11" type="text" class="CPF mid left obg" placeholder="CPF:"/>
+                                    <input name="IDENTIDADE" id="ri" maxlength="9" type="text" class="IDENTIDADE mid right obg" placeholder="RI (identidade):" /><br/>
+                                    <input name="FIXO" id="tel" maxlength="10" type="text" class="FIXO mid left obg" placeholder="Telefone fixo:" />
+                                    <input name="CELULAR" id="cel" maxlength="11" type="text" class="CELULAR mid right obg" placeholder="Celular:" /><br/> 
+                                    <input name="CARTAO" id="numCartao" maxlength="16" type="text" class="CARTAO large obg" placeholder="Número do cartão de crédito:" /><br/>
                                     <span>Bandeira do cartão:</span>
                                     <input name="BANDEIRA" type="radio" value="MasterCard" checked="checked"/><img class="bandeira" src="images/master.png"/>
                                     <input name="BANDEIRA" value="Visa"  type="radio"/><img class="bandeira" src="images/visa.png"/>
@@ -273,7 +305,7 @@
                                     </select>
                                     <input name="NOME" type="text" id="nome" class='obg' placeholder="Nome" >
                                     <input name="DESCRICAO" type="text" id="descricao" class='obg' placeholder="Descrição" >
-                                    <input name="VALOR" type="text" id="valor" class='obg' placeholder="Valor"  >
+                                    <input name="VALOR" type="text" id="valor" class='VALOR obg' placeholder="Valor"  >
                                     <button type="submit">Enviar</button>
                                     <button type="button" onClick="this.form.reset();cancelar('inserir');">Cancelar</button>
                                 </form>
@@ -284,11 +316,11 @@
                         %>
                             <button id='i' type='button' onClick='mostrarFormulario("inserir")'>Inserir</button>
                             <div id="inserir" style="display:none">
-                                <form action='Tabelas' method='post' onsubmit='return validarFormulario("ADMINISTRADOR", "inserir");'>
+                                <form action='Tabelas' method='post' onsubmit='return validarFormulario("inserir", "inserir");'>
                                     <input name='tabela' style='display:none' value='ADMINISTRADOR'>
                                     <input name='op' style='display:none' value='inserir'>
                                     <input name="LOGIN" type="text" id="nome" class='obg' placeholder="Nome">
-                                    <input name="SENHA" type="password" id="senha" class='obg' placeholder="Senha">
+                                    <input name="SENHA" type="password" id="senha" class='SENHA obg' placeholder="Senha">
                                     <button type="submit">Enviar</button>
                                     <button type="button" onClick="this.form.reset();cancelar('inserir');">Cancelar</button>
                                 </form>

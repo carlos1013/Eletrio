@@ -50,7 +50,7 @@ public class Tabelas extends HttpServlet {
                 out.println("<title>Servlet NewServlet</title>");            
                 out.println("</head>");
                 out.println("<body>");
-                out.println("<h3>DEU MERDA</h3>");
+                out.println("<h3>ERRO NO BANCO DE DADOS</h3>");
                 out.println("<br>");
                 out.println("</body>");
                 out.println("</html>");
@@ -129,6 +129,13 @@ public class Tabelas extends HttpServlet {
                 erro(response);
                 break;
         }
+        try{
+            RequestDispatcher rd = request.getRequestDispatcher("selecionar.jsp");
+            rd.forward(request, response);
+        }
+        catch(Exception err){
+            erro(response);
+        }
     }
     
     private void editar(String nome,HttpServletResponse response,HttpServletRequest request){
@@ -193,6 +200,13 @@ public class Tabelas extends HttpServlet {
                 erro(response);
                 break;   
         }
+        try{
+            RequestDispatcher rd = request.getRequestDispatcher("selecionar.jsp");
+            rd.forward(request, response);
+        }
+        catch(Exception err){
+            erro(response);
+        }
     }
     
     private void remover(String nome,HttpServletResponse response,HttpServletRequest request){
@@ -202,6 +216,8 @@ public class Tabelas extends HttpServlet {
         try(PreparedStatement sql = db.prepareStatement("DELETE FROM " + nome + " WHERE ID=?")){
             sql.setInt(1,id);
             sql.executeUpdate();
+            RequestDispatcher rd = request.getRequestDispatcher("selecionar.jsp");
+            rd.forward(request, response);
         }
         catch(Exception err){
             erro(response);
@@ -238,7 +254,10 @@ public class Tabelas extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String operation = request.getParameter("op"),nomeTabela =  request.getParameter("tabela");
-        System.out.println(operation);
+        if (operation == null){
+            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+            rd.forward(request, response);
+        }
         if (operation.equals("consultar")){
             consultar(nomeTabela,response,request);
         }

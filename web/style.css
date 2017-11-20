@@ -15,6 +15,19 @@ body {
     margin-left:-150px;
 }
 
+a, button, input {
+    text-decoration:none;
+    transition:0.3s;
+}
+
+a {
+    color:#3f51b5;
+}
+
+a:hover {
+    color:#ff5722;
+}
+
 input, textarea, button, select {
     outline:none;
     padding:10px 20px;
@@ -182,4 +195,9 @@ td input {
     color:#ffffff;
     text-align:center;
     display:inline-block;
+}
+
+#topo .att {
+    background:#ffe8e7;
+    color:#fd8c8c;
 }
