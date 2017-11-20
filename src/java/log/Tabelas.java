@@ -211,7 +211,7 @@ public class Tabelas extends HttpServlet {
     
     private void remover(String nome,HttpServletResponse response,HttpServletRequest request){
         String t = request.getParameter("id");
-        System.out.println(t);
+
         int id = Integer.parseInt(t);
         try(PreparedStatement sql = db.prepareStatement("DELETE FROM " + nome + " WHERE ID=?")){
             sql.setInt(1,id);
