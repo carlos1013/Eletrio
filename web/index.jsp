@@ -39,7 +39,7 @@
         <div id="login">
             <img src="images/logo.png"/>
             <script><%= request.getAttribute("message")%>;</script>
-            <form action="Login_Usuario" method="post" onsubmit="return notNull();">
+            <form action="Login_User" method="post" onsubmit="return notNull();">
                 <input name="nome" type="text" class="nome obg" id="nome" placeholder="Usuario" onclick="bgBranco('nome');">
                 <input name="psw" type="password" class="psw obg" id="psw" placeholder="Senha" onclick="bgBranco('psw');">
                 <input type="submit" class="submit" id='submit' value="Entrar">

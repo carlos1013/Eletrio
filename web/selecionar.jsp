@@ -93,7 +93,7 @@
                 
                 var l = document.getElementById(linha);
                 l.setAttribute("class","");
-                l.getElementsByClassName('btns')[0].innerHTML = "<button id='e' type='button' onclick='operacao(\""+id+"\", \"editar\", \""+linha+"\",\""+colunas+"\")'>Editar</button>";
+                l.getElementsByClassName('btns')[0].innerHTML = "<button id='e' type='button' onclick='document.getElementById(\"er\").setAttribute(\"action\", \"Editar\");operacao(\""+id+"\", \"editar\", \""+linha+"\",\""+colunas+"\")'>Editar</button>";
             }
             
             function mostrarFormulario(nome) {
@@ -205,7 +205,7 @@
             </div>
             <div id="selecionar">
                 <span>Selecione a informação desejada:</span>
-                <form action="Tabelas" method="post">
+                <form action="Consultar_Completo" method="post">
                     <input name='op' style='display:none' value='consultar'>
                     <select name="tabela">
                         <option value="CATEGORIA" selected>Categorias</option>
@@ -226,7 +226,7 @@
                         String nome = row[0];
                         int qtAtt = Integer.parseInt(row[1]);
                         out.println("<h1>"+nome+"</h1>");
-                        out.println("<form action='Tabelas' method='post' onsubmit='return validarFormulario(\""+nome+"\", \"ru\");'><div id='ru'>");
+                        out.println("<form id='er' action='' method='post' onsubmit='return validarFormulario(\""+nome+"\", \"ru\");'><div id='ru'>");
                         out.println("<input name='tabela' style='display:none' value='"+nome+"'>");
                         out.println("<input id='id'  name='id' style='display:none' value=''>");
                         out.println("<input id='op' name='op' class='obg' style='display:none' value=''>");
@@ -250,11 +250,11 @@
                                 out.println("<td class='linha"+i+"'>"+row[j]+"</td>");
                             }                            
                             if(nome.equals("CLIENTES") || nome.equals("PRODUTO") || nome.equals("ADMINISTRADOR")) {
-                                out.print("<td class='btns'><button id='e' type='button' onclick='operacao(\""+row[0]+"\", \"editar\",\"linha"+i+"\", \""+colunas+"\")'>Editar</button></td>");
-                                out.print("<td><button id='r' type='submit' onclick='operacao(\""+row[0]+"\", \"remover\",\"linha"+i+"\", \""+colunas+"\")'>Remover</button></td>");
+                                out.print("<td class='btns'><button id='e' type='button' onclick='document.getElementById(\"er\").setAttribute(\"action\", \"Editar\");operacao(\""+row[0]+"\", \"editar\",\"linha"+i+"\", \""+colunas+"\")'>Editar</button></td>");
+                                out.print("<td><button id='r' type='submit' onclick='document.getElementById(\"er\").setAttribute(\"action\", \"Remover\");operacao(\""+row[0]+"\", \"remover\",\"linha"+i+"\", \""+colunas+"\")'>Remover</button></td>");
                             }
                             else if (nome.equals("COMPRAS"))
-                                out.print("<td><button id='r' type='submit' onclick='operacao(\""+row[0]+"\", \"remover\",\"linha"+i+"\", \""+colunas+"\")'>Remover</button></td>");
+                                out.print("<td><button id='r' type='submit' onclick='document.getElementById(\"er\").setAttribute(\"action\", \"Remover\");operacao(\""+row[0]+"\", \"remover\",\"linha"+i+"\", \""+colunas+"\")'>Remover</button></td>");
 
                             out.println("</tr>");
                         }//for
@@ -264,7 +264,7 @@
                         %>
                             <button id='i' type='button' onClick='mostrarFormulario("inserir")'>Inserir</button>
                             <div id="inserir" style="display:none">
-                                <form action='Tabelas' method='post' onsubmit='return validarFormulario("CLIENTES", "inserir");'>
+                                <form action='Inserir' method='post' onsubmit='return validarFormulario("CLIENTES", "inserir");'>
                                     <input name='tabela' style='display:none' value='CLIENTES'>
                                     <input name='op' style='display:none' value='inserir'>
                                     <input name="NOME" id="nome" maxlength="50" class="large obg" type="text" placeholder="Nome:"/><br/>
@@ -294,7 +294,7 @@
                         %>
                             <button id='i' type='button' onClick='mostrarFormulario("inserir")'>Inserir</button>
                             <div id="inserir" style="display:none">
-                                <form action='Tabelas' method='post' onsubmit='return validarFormulario("PRODUTO", "inserir");'>
+                                <form action='Inserir' method='post' onsubmit='return validarFormulario("PRODUTO", "inserir");'>
                                     <input name='tabela' style='display:none' value='PRODUTO'>
                                     <input name='op' style='display:none' value='inserir'>
                                     <select name="ID_CATEGORIA">
@@ -316,7 +316,7 @@
                         %>
                             <button id='i' type='button' onClick='mostrarFormulario("inserir")'>Inserir</button>
                             <div id="inserir" style="display:none">
-                                <form action='Tabelas' method='post' onsubmit='return validarFormulario("inserir", "inserir");'>
+                                <form action='Inserir' method='post' onsubmit='return validarFormulario("inserir", "inserir");'>
                                     <input name='tabela' style='display:none' value='ADMINISTRADOR'>
                                     <input name='op' style='display:none' value='inserir'>
                                     <input name="LOGIN" type="text" id="nome" class='obg' placeholder="Nome">
