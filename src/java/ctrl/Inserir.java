@@ -38,10 +38,10 @@ public class Inserir extends HttpServlet {
                     (new Clientes_DAO()).inserir((new Clientes(request.getParameter("NOME"),request.getParameter("ENDERECO"),request.getParameter("REFERENCIA"),request.getParameter("BAIRRO"),request.getParameter("CIDADE"),request.getParameter("CEP"),request.getParameter("ESTADO"),request.getParameter("CPF"),request.getParameter("IDENTIDADE"),request.getParameter("FIXO"),request.getParameter("CELULAR"),request.getParameter("CARTAO"),request.getParameter("BANDEIRA"))));
                     break;
                 case "COMPRAS":
-                    (new Compras_DAO()).remover((new Compras(Integer.parseInt(request.getParameter("ID_CLIENTE")),Integer.parseInt(request.getParameter("ID_PRODUTO")))));
+                    (new Compras_DAO()).inserir((new Compras(Integer.parseInt(request.getParameter("ID_CLIENTE")),Integer.parseInt(request.getParameter("ID_PRODUTO")))));
                     break;
                 case "PRODUTO":
-                    (new Produto_DAO()).remover((new Produto(Integer.parseInt(request.getParameter("ID_CATEGORIA")),request.getParameter("NOME"),request.getParameter("DESCRICAO"),Float.parseFloat(request.getParameter("VALOR")))));
+                    (new Produto_DAO()).inserir((new Produto(Integer.parseInt(request.getParameter("ID_CATEGORIA")),request.getParameter("NOME"),request.getParameter("DESCRICAO"),Float.parseFloat(request.getParameter("VALOR")))));
                     break;
                 default:
                     //erro
