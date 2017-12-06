@@ -24,7 +24,7 @@ public class Adapt_Conexao {
             this.adapt.close();
         } 
         catch (Exception err) {
-            throw new RuntimeException("Erro ao tentar finalizar a conxao com o BD");
+            throw new RuntimeException("Erro ao tentar finalizar a conexao com o BD");
         }
     }
 }

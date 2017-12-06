@@ -50,6 +50,9 @@ public class Compras_DAO {
         catch(Exception err){
             throw new RuntimeException();
         }
+        finally {
+            conexao.encerarConexao();
+        }
     }
     
     public List<String> consultar(){
@@ -76,6 +79,9 @@ public class Compras_DAO {
         } 
         catch (Exception ex) {
             throw new RuntimeException();
+        }
+        finally {
+            conexao.encerarConexao();
         }
     }
 }

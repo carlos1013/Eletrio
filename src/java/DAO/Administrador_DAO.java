@@ -60,6 +60,9 @@ public class Administrador_DAO {
         catch(Exception err){
             throw new RuntimeException();
         }
+        finally {
+            conexao.encerarConexao();
+        }
     }
     
     public List<String> consultar(){
@@ -87,6 +90,9 @@ public class Administrador_DAO {
         catch (Exception ex) {
             throw new RuntimeException();
         }
+        finally {
+            conexao.encerarConexao();
+        }
     }
     
     public boolean verifica_existencia(Administrador admin){
@@ -99,6 +105,9 @@ public class Administrador_DAO {
         } 
         catch (Exception ex) {
             throw new RuntimeException();
+        }
+        finally {
+            conexao.encerarConexao();
         }
     }
 }

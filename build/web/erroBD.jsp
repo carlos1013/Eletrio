@@ -19,7 +19,7 @@
         <div class="conteudo">
             <div id="topo">
                 <img src="images/logo.png">
-                <h3 class='att'>ERRO NO BANCO DE DADOS!</h3>
+                <h3 class='att'>ERRO NO BANCO DE DADOS<br><a href='/Eletrio'>Voltar</a>?</h3>
             </div>
         </div>
     </body>

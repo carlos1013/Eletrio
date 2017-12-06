@@ -282,7 +282,7 @@
                                     <span>Bandeira do cartão:</span>
                                     <input name="BANDEIRA" type="radio" value="MasterCard" checked="checked"/><img class="bandeira" src="images/master.png"/>
                                     <input name="BANDEIRA" value="Visa"  type="radio"/><img class="bandeira" src="images/visa.png"/>
-                                    <input name="BANDEIRA" value="AmericanExpress"  type="radio"/><img class="bandeira" src="images/ae.png"/>
+                                    <input name="BANDEIRA" value="American"  type="radio"/><img class="bandeira" src="images/ae.png"/>
                                     <input name="BANDEIRA" value="Elo"  type="radio"/><img class="bandeira" src="images/elo.png"/><br/>
                                     <button type="submit">Enviar</button>
                                     <button type="button" onClick="this.form.reset();cancelar('inserir');">Cancelar</button>

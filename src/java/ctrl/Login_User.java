@@ -32,8 +32,8 @@ public class Login_User extends HttpServlet {
                 request.getRequestDispatcher("index.jsp").forward(request,response);
             }
         }
-        catch(IOException | ServletException err){
-            
+        catch(Exception err){
+            request.getRequestDispatcher("erroBD.jsp").forward(request,response);
         }
     }
 }

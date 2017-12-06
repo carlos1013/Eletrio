@@ -37,7 +37,7 @@ public class Consultar_Completo extends HttpServlet {
                 request.setAttribute("r",(new Produto_DAO()).consultar());
                 break;
             default:
-                //erro
+                request.getRequestDispatcher("erroBD.jsp").forward(request,response);
         }
         request.getRequestDispatcher("selecionar.jsp").forward(request,response);
     }

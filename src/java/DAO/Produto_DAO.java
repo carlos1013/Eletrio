@@ -53,6 +53,9 @@ public class Produto_DAO {
         catch(Exception err){
             throw new RuntimeException();
         }
+        finally {
+            conexao.encerarConexao();
+        }
     }
     
     public List<String> consultar(){
@@ -75,10 +78,52 @@ public class Produto_DAO {
                 }
                 resp.add(aux);
             }
-            return resp;
         } 
         catch (Exception ex) {
             throw new RuntimeException();
         }
+        finally {
+            conexao.encerarConexao();
+        }
+        return resp;
     }
+    
+    public List<String> busca_tipo(){
+        Adapt_Conexao conexao = new Adapt_Conexao();
+        List<String> resp = new ArrayList<>();
+        try (PreparedStatement sql = conexao.conectar().prepareStatement("SELECT NOME,DESCRICAO,VALOR FROM PRODUTO WHERE ID_CATEGORIA="+"1")){
+            ResultSet res = sql.executeQuery();
+            while(res.next()){
+                
+                resp.add("");
+            }
+        } 
+        catch (Exception ex) {
+            throw new RuntimeException();
+        }
+        finally {
+            conexao.encerarConexao();
+        }
+        return null;
+    }
+    
+    public List<String> busca_nome(){
+        Adapt_Conexao conexao = new Adapt_Conexao();
+        List<String> resp = new ArrayList<>();
+        try (PreparedStatement sql = conexao.conectar().prepareStatement("SELECT NOME,DESCRICAO,VALOR FROM PRODUTO WHERE ID_CATEGORIA="+"1"+" AND NOME LIKE '%"+"2"+"%'")){
+            ResultSet res = sql.executeQuery();
+            while(res.next()){
+                
+                resp.add("");
+            }
+        } 
+        catch (Exception ex) {
+            throw new RuntimeException();
+        }
+        finally {
+            conexao.encerarConexao();
+        }
+        return null;
+    }
+    
 }

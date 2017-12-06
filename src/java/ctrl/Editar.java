@@ -49,7 +49,7 @@ public class Editar extends HttpServlet {
             }
         } 
         catch (Exception ex) {
-            Logger.getLogger(Editar.class.getName()).log(Level.SEVERE, null, ex);
+            request.getRequestDispatcher("erroBD.jsp").forward(request,response);
         }
         request.getRequestDispatcher("selecionar.jsp").forward(request,response);
     }

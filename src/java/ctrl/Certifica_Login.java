@@ -1,4 +1,4 @@
-package log;
+package ctrl;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
-@WebFilter(filterName = "Certifica_Login", urlPatterns = {"/Tabelas","/selecionar.jsp","/Consultar_Completo","/Editar","/Inserir","/Remover"})
+@WebFilter(filterName = "Certifica_Login", urlPatterns = {"/selecionar.jsp","/Consultar_Completo","/Editar","/Inserir","/Remover"})
 public class Certifica_Login implements Filter {
     
     @Override
