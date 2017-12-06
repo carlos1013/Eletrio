@@ -23,7 +23,7 @@ public class Logout_Usuario extends HttpServlet {
                 sessao.setAttribute("logado","false");
             } 
         } 
-        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
         rd.forward(request, response);
     }
 }

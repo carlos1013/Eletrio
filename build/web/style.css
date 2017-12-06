@@ -15,7 +15,7 @@ body {
     margin-left:-150px;
 }
 
-a, button, input {
+a, button, input, label {
     text-decoration:none;
     transition:0.3s;
 }
@@ -28,7 +28,7 @@ a:hover {
     color:#ff5722;
 }
 
-input, textarea, button, select {
+input, textarea, button, select, label {
     outline:none;
     padding:10px 20px;
     border-radius:2px;
@@ -36,7 +36,7 @@ input, textarea, button, select {
     font-family:'Open Sans', sans-serif;
 }
 
-button, #selecionar input[type=submit], #login .submit {
+button, #selecionar input[type=submit], #login .submit, label, #pesquisa input[type=submit] {
     color:#fff;
     cursor:pointer;
     font-weight:600;
@@ -101,18 +101,18 @@ input[type=submit] {
     display:inline-block;
 }
 
-#selecionar input[type=submit], #inserir button[type=submit], #login .submit {background:#03A9F4;}
+input[type=submit] {background:#03A9F4;}
 
-#selecionar input[type=submit]:hover, #inserir button[type=submit]:hover, #login .submit:hover {background:#36b5ef;}
+input[type=submit]:hover {background:#36b5ef;}
 
 #e {background:#FF9800;}
 #e:hover {background:#ffac31;}
 
-#r,#sair button {background:#F44336;}
-#r:hover,#sair button:hover {background:#ff5d51;}
+#r,#sair button, label {background:#F44336;}
+#r:hover,#sair button:hover, label:hover {background:#ff5d51;}
 
-#i, .btns button[type=submit] {background:#8BC34A;}
-#i:hover, .btns button[type=submit]:hover {background:#9fd660;}
+#i, .btns button[type=submit], .login button {background:#8BC34A;}
+#i:hover, .btns button[type=submit]:hover, .login button:hover {background:#9fd660;}
 
 table {
     max-width:100%;
@@ -200,4 +200,39 @@ td input {
 #topo .att {
     background:#ffe8e7;
     color:#fd8c8c;
+}
+
+#menu, #listar {
+    width:100%;
+    float:left;
+}
+
+#menu {
+    margin-top:20px;
+}
+
+.login {
+    float:right;
+    margin-left:20px;
+}
+
+#listar {
+    margin:20px 0px;
+}
+
+#tipo input {
+    display:none;
+}
+
+#pesquisa {
+    float:right;
+}
+
+#tipo {
+    float:left;
+}
+
+label {
+    display:inline-block;
+    line-height:18px;
 }
