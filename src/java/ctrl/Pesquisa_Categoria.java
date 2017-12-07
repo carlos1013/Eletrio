@@ -21,7 +21,7 @@ public class Pesquisa_Categoria extends HttpServlet{
             }
             Produto prod = new Produto(id_cat);
             Produto_DAO p_dao = new Produto_DAO();
-            request.setAttribute("r",p_dao.busca_nome(prod));
+            request.setAttribute("r",p_dao.busca_tipo(prod));
             request.getRequestDispatcher("index.jsp").forward(request,response);
         }
         catch(Exception err){

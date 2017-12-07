@@ -3,8 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/VANIA/Documents/Git/Eletrio/web/index.jsp</file>
-            <file>file:/C:/Users/VANIA/Documents/Git/Eletrio/web/selecionar.jsp</file>
+            <file>file:/C:/Users/Carlos/Desktop/Git/Eletrio/src/java/DAO/Produto_DAO.java</file>
+            <file>file:/C:/Users/Carlos/Desktop/Git/Eletrio/src/java/ctrl/Consultar_Completo.java</file>
+            <file>file:/C:/Users/Carlos/Desktop/Git/Eletrio/src/java/ctrl/Adicionar_Carrinho.java</file>
+            <file>file:/C:/Users/Carlos/Desktop/Git/Eletrio/src/java/ctrl/Pesquisa_Produto.java</file>
+            <file>file:/C:/Users/Carlos/Desktop/Git/Eletrio/web/index.jsp</file>
+            <file>file:/C:/Users/Carlos/Desktop/Git/Eletrio/src/java/ctrl/Pesquisa_Categoria.java</file>
+            <file>file:/C:/Users/Carlos/Desktop/Git/Eletrio/src/java/DAO/Produto.java</file>
         </group>
     </open-files>
 </project-private>

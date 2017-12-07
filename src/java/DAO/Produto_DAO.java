@@ -134,4 +134,25 @@ public class Produto_DAO {
         return resp;
     }
     
+    public Produto busca_produto(Produto prod){
+        Adapt_Conexao conexao = new Adapt_Conexao();
+        try (PreparedStatement sql = conexao.conectar().prepareStatement("")){
+            ResultSet res = sql.executeQuery();
+            String[] aux = new String[4];
+            while(res.next()){
+                aux[0] = res.getString(1);
+                for (int x=2;x<=4;x++){
+                    aux[x-1] = res.getString(x);
+                }
+            }
+            return new Produto(Integer.parseInt(aux[0]),aux[1],aux[2],Float.parseFloat(aux[3]));
+        }
+        catch (Exception ex) {
+            throw new RuntimeException();
+        }
+        finally {
+            conexao.encerarConexao();
+        }   
+    }
+    
 }
