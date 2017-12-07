@@ -13,12 +13,18 @@
                 var id_produto = document.getElementById("id");
                 id_produto.setAttribute('value', id);
             }
+            function mensagem(msg) {
+                if (msg !== 'null') {
+                    alert(msg);
+                    document.getElementById('cart').submit();
+                }
+            }
         </script>
     </head>
     <body>
         <div class="conteudo">
             <div id='menu'>
-                <form action="Retorna_Produtos" method="post"><button onclick="this.form.submit" class="carrinho"></button></form>
+                <form id='cart' action="Retorna_Produtos" method="post"><button onclick="this.form.submit" class="carrinho"></button></form>
                 <a class='login' href="login.jsp"><button>Área Restrita</button></a>
             </div>
             <div id="topo">
@@ -27,6 +33,7 @@
             </div>
             <div id="tabela">
                 <form id='form' action='Retorna_Produtos' method="post"></form>
+                <script><%= request.getAttribute("msg")%>;</script>
                 <%
                     try {
                         List<String> r = (List)request.getAttribute("r");

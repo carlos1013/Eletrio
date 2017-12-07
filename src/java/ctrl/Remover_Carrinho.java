@@ -29,6 +29,7 @@ public class Remover_Carrinho extends HttpServlet{
                }
             }
         }
+        request.setAttribute("msg", "mensagem('Produto removido com sucesso.');");
         request.getRequestDispatcher("carrinho.jsp").forward(request,response);
     }
 }
