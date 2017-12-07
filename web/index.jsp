@@ -13,7 +13,7 @@
         <div class="conteudo">
             <div id='menu'>
                 <a class="carrinho" href='carrinho.jsp'></a>
-                <a class='login' href="index.jsp"><button>Área Restrita</button></a>
+                <a class='login' href="login.jsp"><button>Área Restrita</button></a>
             </div>
             <div id="topo">
                 <img src="images/logo.png">
@@ -30,8 +30,8 @@
                     <input id='smart' name='item' type='radio' value="4" onClick='this.form.submit();'>
                     <label for='smart'>Smartphones</label>
                 </form>
-                <form id='pesquisa'>
-                    <input type="text" placeholder='Pesquise aqui!' value=''>
+                <form action="Pesquisa_Produto" method="post" id='pesquisa'>
+                    <input type="text" name="text" placeholder='Pesquise aqui!' value=''>
                     <input type="submit" value='PESQUISAR'>
                 </form>
             </div>

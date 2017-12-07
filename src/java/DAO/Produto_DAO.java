@@ -93,9 +93,13 @@ public class Produto_DAO {
         List<String> resp = new ArrayList<>();
         try (PreparedStatement sql = conexao.conectar().prepareStatement("SELECT NOME,DESCRICAO,VALOR FROM PRODUTO WHERE ID_CATEGORIA="+"1")){
             ResultSet res = sql.executeQuery();
+            String aux;
             while(res.next()){
-                
-                resp.add("");
+                aux = res.getString(1);
+                for (int x=3;x<=5;x++){
+                    aux = aux+"¨"+res.getString(x);
+                }
+                resp.add(aux);
             }
         } 
         catch (Exception ex) {
@@ -107,14 +111,18 @@ public class Produto_DAO {
         return null;
     }
     
-    public List<String> busca_nome(){
+    public List<String> busca_nome(Produto prod){
         Adapt_Conexao conexao = new Adapt_Conexao();
         List<String> resp = new ArrayList<>();
-        try (PreparedStatement sql = conexao.conectar().prepareStatement("SELECT NOME,DESCRICAO,VALOR FROM PRODUTO WHERE ID_CATEGORIA="+"1"+" AND NOME LIKE '%"+"2"+"%'")){
+        try (PreparedStatement sql = conexao.conectar().prepareStatement("SELECT ID,NOME,DESCRICAO,VALOR FROM PRODUTO WHERE NOME LIKE '%"+prod.getNome()+"%'")){
             ResultSet res = sql.executeQuery();
+            String aux;
             while(res.next()){
-                
-                resp.add("");
+                aux = res.getString(1);
+                for (int x=3;x<=5;x++){
+                    aux = aux+"¨"+res.getString(x);
+                }
+                resp.add(aux);
             }
         } 
         catch (Exception ex) {
