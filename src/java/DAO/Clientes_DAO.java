@@ -104,4 +104,22 @@ public class Clientes_DAO {
             conexao.encerarConexao();
         }
     }
+    
+    public int busca_id (Clientes clnt){
+        Adapt_Conexao conexao = new Adapt_Conexao();
+        try (PreparedStatement sql = conexao.conectar().prepareStatement("SELECT ID FROM CLIENTES WHERE CPF="+clnt.getCpf())){
+            ResultSet res = sql.executeQuery();
+            int aux = -1;
+            while(res.next()){
+                aux = Integer.parseInt(res.getString(1));
+            }
+            return aux;
+        }
+        catch (Exception ex) {
+            throw new RuntimeException();
+        }
+        finally {
+            conexao.encerarConexao();
+        }   
+    }
 }

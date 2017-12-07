@@ -35,6 +35,10 @@ public class Clientes {
     public Clientes(int id) {
         this.id = id;
     }
+    
+    public Clientes(String cpf) {
+        this.cpf = cpf;
+    }
 
     public Clientes(int id, String nome, String endereco, String referencia, String bairro, String cidade, String cep, String estado, String cpf, String identidade, String fixo, String celular, String cartao, String bandeira) {
         this.id = id;
