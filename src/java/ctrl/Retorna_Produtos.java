@@ -21,6 +21,7 @@ public class Retorna_Produtos extends HttpServlet{
         Cookie[] list = request.getCookies();
         Cookie c;
         List<String> resp = new ArrayList<>();
+        System.out.println(list.length);
         if(list!=null){
             for (int i = 0; i < list.length-1; i++) {
                c = list[i];
@@ -30,6 +31,7 @@ public class Retorna_Produtos extends HttpServlet{
                resp.add(aux);
             }
         }
+        System.out.println(resp);
         request.setAttribute("r",resp);
         request.getRequestDispatcher("carrinho.jsp").forward(request,response);
     }
