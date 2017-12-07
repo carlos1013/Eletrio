@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="style.css" type="text/css"/>
         <link rel="icon" href="images/favicon.png">
-        <title>Loja DW</title>
+        <title>Loja DW | Meu Carrinho</title>
     </head>
     <body>
         <div class="conteudo">
@@ -17,9 +17,9 @@
             </div>
             <div id="topo">
                 <img src="images/logo.png">
+                <h3>Minhas Compras</h3>
             </div>
             <div id="tabela">
-                <h1>Minhas Compras</h1>
                 <%
                     try {
                         List<String> r = (List)request.getAttribute("r");
@@ -50,6 +50,9 @@
                             out.println("</table></div></form>");
                             out.println("<b>Total: "+total+"</b>");
                             out.println("<button>Finalizar Compra</button>");
+                        }
+                        else {
+                            out.println("<h3>Seu carrinho está vazio.</h3>");
                         }
                     }
                     catch(Exception e) {}

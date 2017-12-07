@@ -8,6 +8,14 @@
         <link rel="stylesheet" href="style.css" type="text/css"/>
         <link rel="icon" href="images/favicon.png">
         <title>Loja DW</title>
+        <script>
+            function adicionarCarrinho(id, nome) {
+                var id_produto = document.getElementById("id");
+                var nome_produto = document.getElementById("nome");
+                id_produto.setAttribute('value', id);
+                nome_produto.setAttribute('value', nome);
+            }
+        </script>
     </head>
     <body>
         <div class="conteudo">
@@ -41,8 +49,9 @@
                         List<String> r = (List)request.getAttribute("r");
                         String[] row;
                         if(r != null && r.size()>0) {
-                            out.println("<form id='' action='' method='post'>");
+                            out.println("<form action='Adicionar_Carrinho' method='post'>");
                             out.println("<input id='id'  name='id' type='hidden' value=''>");
+                            out.println("<input id='nome'  name='nome' type='hidden' value=''>");
                             out.println("<table><tr>");
                             out.println("<th>Nome</th>");
                             out.println("<th>Descricao</th>");
@@ -57,7 +66,7 @@
 
                                 for (int j = 1; j < 4; j++) 
                                     out.println("<td>"+row[j]+"</td>");
-                                out.println("<td><button class='compra' type='button' onClick=''>Comprar</button></td>");
+                                out.println("<td><button class='compra' type='button' onClick='adicionarCarrinho(\""+row[0]+"\", \""+row[1]+"\"); this.form.submit()'>Comprar</button></td>");
                                 out.println("</tr>");
                             }
                             out.println("</table></div></form>");
