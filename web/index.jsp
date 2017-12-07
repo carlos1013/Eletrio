@@ -20,7 +20,7 @@
                 <h3>Realize suas compras!</h3>
             </div>
             <div id="listar">
-                <form id='tipo' action="" method="post">
+                <form id='tipo' action="Pesquisa_Categoria" method="post">
                     <input id='eletrod' name='item' type='radio' value="1" checked='checked' onClick='this.form.submit();'>
                     <label for='eletrod'>Eletrodomésticos</label>
                     <input id='info' name='item' type='radio' value="2" onClick='this.form.submit();'>

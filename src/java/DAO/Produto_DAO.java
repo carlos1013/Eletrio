@@ -88,15 +88,15 @@ public class Produto_DAO {
         return resp;
     }
     
-    public List<String> busca_tipo(){
+    public List<String> busca_tipo(Produto prod){
         Adapt_Conexao conexao = new Adapt_Conexao();
         List<String> resp = new ArrayList<>();
-        try (PreparedStatement sql = conexao.conectar().prepareStatement("SELECT NOME,DESCRICAO,VALOR FROM PRODUTO WHERE ID_CATEGORIA="+"1")){
+        try (PreparedStatement sql = conexao.conectar().prepareStatement("SELECT ID,NOME,DESCRICAO,VALOR FROM PRODUTO WHERE ID_CATEGORIA="+Integer.toString(prod.getId()))){
             ResultSet res = sql.executeQuery();
             String aux;
             while(res.next()){
                 aux = res.getString(1);
-                for (int x=3;x<=5;x++){
+                for (int x=2;x<=4;x++){
                     aux = aux+"¨"+res.getString(x);
                 }
                 resp.add(aux);
@@ -108,7 +108,7 @@ public class Produto_DAO {
         finally {
             conexao.encerarConexao();
         }
-        return null;
+        return resp;
     }
     
     public List<String> busca_nome(Produto prod){
@@ -119,7 +119,7 @@ public class Produto_DAO {
             String aux;
             while(res.next()){
                 aux = res.getString(1);
-                for (int x=3;x<=5;x++){
+                for (int x=2;x<=4;x++){
                     aux = aux+"¨"+res.getString(x);
                 }
                 resp.add(aux);
@@ -131,7 +131,7 @@ public class Produto_DAO {
         finally {
             conexao.encerarConexao();
         }
-        return null;
+        return resp;
     }
     
 }
