@@ -20,6 +20,7 @@
                 <h3>Minhas Compras</h3>
             </div>
             <div id="tabela">
+                <form id='form' action='Retorna_Produtos' method="post"></form>
                 <%
                     try {
                         List<String> r = (List)request.getAttribute("r");
@@ -60,5 +61,11 @@
             </div>
             <a href='/Eletrio' class='voltar'><button>Voltar as compras</button></a>
         </div>
+        <script>
+            function carregarprodutos() {
+                document.getElementById('form').submit();
+            }
+            carregarprodutos();
+        </script>
     </body>
 </html>

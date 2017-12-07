@@ -22,7 +22,7 @@ public class Retorna_Produtos extends HttpServlet{
         Cookie c;
         List<String> resp = new ArrayList<>();
         if(list!=null){
-            for (int i = 0; i < list.length-1; i++) {
+            for (int i = 1; i < list.length; i++) {
                c = list[i];
                Produto p = (new Produto_DAO()).busca_produto((new Produto(Integer.parseInt(c.getName()))));
                String aux = Integer.toString(p.getId_categoria())+"¨";
