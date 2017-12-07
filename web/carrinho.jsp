@@ -17,37 +17,22 @@
             </div>
             <div id="topo">
                 <img src="images/logo.png">
-                <h3>Realize suas compras!</h3>
-            </div>
-            <div id="listar">
-                <form id='tipo' action="Pesquisa_Categoria" method="post">
-                    <input id='eletrod' name='item' type='radio' value="1" checked='checked' onClick='this.form.submit();'>
-                    <label for='eletrod'>Eletrodomésticos</label>
-                    <input id='info' name='item' type='radio' value="2" onClick='this.form.submit();'>
-                    <label for='info'>Informática</label>
-                    <input id='eletrop' name='item' type='radio' value="3" onClick='this.form.submit();'>
-                    <label for='eletrop'>Eletroportáteis</label>
-                    <input id='smart' name='item' type='radio' value="4" onClick='this.form.submit();'>
-                    <label for='smart'>Smartphones</label>
-                </form>
-                <form action="Pesquisa_Produto" method="post" id='pesquisa'>
-                    <input type="text" name="text" placeholder='Pesquise aqui!' value=''>
-                    <input type="submit" value='PESQUISAR'>
-                </form>
             </div>
             <div id="tabela">
+                <h1>Minhas Compras</h1>
                 <%
                     try {
                         List<String> r = (List)request.getAttribute("r");
                         String[] row;
                         if(r != null && r.size()>0) {
+                            float total = 0;
                             out.println("<form id='' action='' method='post'>");
                             out.println("<input id='id'  name='id' type='hidden' value=''>");
                             out.println("<table><tr>");
                             out.println("<th>Nome</th>");
                             out.println("<th>Descricao</th>");
                             out.println("<th>Valor</th>");
-                            out.println("<th>Comprar</th>");
+                            out.println("<th>Remover</th>");
 
                             out.println("</tr>");
 
@@ -57,15 +42,20 @@
 
                                 for (int j = 1; j < 4; j++) 
                                     out.println("<td>"+row[j]+"</td>");
-                                out.println("<td><button class='compra' type='button' onClick=''>Comprar</button></td>");
+                                out.println("<td><button class='remover' type='button' onClick=''>Remover</button></td>");
                                 out.println("</tr>");
+                                
+                                total += Float.parseFloat(row[3]);
                             }
                             out.println("</table></div></form>");
+                            out.println("<b>Total: "+total+"</b>");
+                            out.println("<button>Finalizar Compra</button>");
                         }
                     }
                     catch(Exception e) {}
                 %>
             </div>
+            <a href='/Eletrio' class='voltar'><button>Voltar as compras</button></a>
         </div>
     </body>
 </html>

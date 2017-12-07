@@ -105,8 +105,8 @@ input[type=submit] {background:#03A9F4;}
 
 input[type=submit]:hover {background:#36b5ef;}
 
-#e {background:#FF9800;}
-#e:hover {background:#ffac31;}
+#e, .voltar {background:#FF9800;}
+#e:hover, .voltar:hover {background:#ffac31;}
 
 #r,#sair button, label {background:#F44336;}
 #r:hover,#sair button:hover, label:hover {background:#ff5d51;}
@@ -212,8 +212,7 @@ td input {
 }
 
 .login {
-    float:right;
-    margin-left:20px;
+    float:left;
 }
 
 #listar {
@@ -235,4 +234,13 @@ td input {
 label {
     display:inline-block;
     line-height:18px;
+}
+
+.carrinho {
+    background: url(images/cart.png) no-repeat center;
+    background-size: contain;
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    float: right;
 }

@@ -40,29 +40,32 @@
                     try {
                         List<String> r = (List)request.getAttribute("r");
                         String[] row;
-                        out.println("<form id='' action='' method='post'>");
-                        out.println("<input id='id'  name='id' type='hidden' value=''>");
-                        out.println("<table><tr>");
-                        out.println("<th>Nome</th>");
-                        out.println("<th>Descricao</th>");
-                        out.println("<th>Valor</th>");
-                        out.println("<th>Comprar</th>");
-                        
-                        out.println("</tr>");
-                        
-                        for (int i = 0; i < r.size(); i++) {
-                            row = r.get(i).split("¨");
-                            out.println("<tr>");
+                        if(r != null && r.size()>0) {
+                            out.println("<form id='' action='' method='post'>");
+                            out.println("<input id='id'  name='id' type='hidden' value=''>");
+                            out.println("<table><tr>");
+                            out.println("<th>Nome</th>");
+                            out.println("<th>Descricao</th>");
+                            out.println("<th>Valor</th>");
+                            out.println("<th>Comprar</th>");
 
-                            for (int j = 1; j < 4; j++) 
-                                out.println("<td>"+row[j]+"</td>");
-                            out.println("<td><button class='compra' type='button' onClick=''>Comprar</button></td>");
                             out.println("</tr>");
+
+                            for (int i = 0; i < r.size(); i++) {
+                                row = r.get(i).split("¨");
+                                out.println("<tr>");
+
+                                for (int j = 1; j < 4; j++) 
+                                    out.println("<td>"+row[j]+"</td>");
+                                out.println("<td><button class='compra' type='button' onClick=''>Comprar</button></td>");
+                                out.println("</tr>");
+                            }
+                            out.println("</table></div></form>");
                         }
-                        out.println("</table></div></form>");
                     }
                     catch(Exception e) {}
-                        %>
+                %>
+            </div>
         </div>
     </body>
 </html>
