@@ -56,7 +56,7 @@
                             }
                             out.println("</table></form>");
                             out.println("<h4>Total: "+total+"</h4><br/>");
-                            out.println("<button class='compra'>Finalizar Compra</button>");
+                            out.println("<a href='cadastro.jsp'><button class='compra'>Finalizar Compra</button></a>");
                             out.println("<a href='/Eletrio' class='voltar'><button>Voltar as compras</button></a>");
                         }
                         else {

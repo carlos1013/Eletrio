@@ -54,7 +54,7 @@
                 <h3>Realize seu cadastro.</h3>
             </div>
             <div id="inserir">
-                <form action='Inserir' method='post' id='cliente' onsubmit='return validarCliente("cliente");'>
+                <form action='Efetuar_Compra' method='post' id='cliente' onsubmit='return validarCliente("cliente");'>
                     <input name='tabela' style='display:none' value='CLIENTES'>
                     <input name='op' style='display:none' value='inserir'>
                     <input name="NOME" id="nome" maxlength="50" class="large obg" type="text" placeholder="Nome:"/><br/>
