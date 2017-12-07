@@ -111,8 +111,8 @@ input[type=submit]:hover {background:#36b5ef;}
 #r,#sair button, label {background:#F44336;}
 #r:hover,#sair button:hover, label:hover {background:#ff5d51;}
 
-#i, .btns button[type=submit], .login button {background:#8BC34A;}
-#i:hover, .btns button[type=submit]:hover, .login button:hover {background:#9fd660;}
+#i, .btns button[type=submit], .login button, .loja button, .compra {background:#8BC34A;}
+#i:hover, .btns button[type=submit]:hover, .login button:hover, .compra:hover {background:#9fd660;}
 
 table {
     max-width:100%;
