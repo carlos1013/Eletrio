@@ -24,6 +24,7 @@ public class Adicionar_Carrinho extends HttpServlet{
         response.addCookie(c);
         request.setAttribute("id",null);
         request.setAttribute("nome",null);
-        request.getRequestDispatcher("/Retorna_Produtos").forward(request,response);
+        request.setAttribute("msg", "mensagem('Produto adicionado ao carrinho com sucesso.');");
+        request.getRequestDispatcher("index.jsp").forward(request,response);
     }
 }

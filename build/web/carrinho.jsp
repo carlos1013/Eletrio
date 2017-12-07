@@ -8,11 +8,17 @@
         <link rel="stylesheet" href="style.css" type="text/css"/>
         <link rel="icon" href="images/favicon.png">
         <title>Loja DW | Meu Carrinho</title>
+        <script>
+            function removerCarrinho(id) {
+                var id_produto = document.getElementById("id");
+                id_produto.setAttribute('value', id);
+            }
+        </script>
     </head>
     <body>
         <div class="conteudo">
             <div id='menu'>
-                <a class="carrinho" href='carrinho.jsp'></a>
+                <form action="Retorna_Produtos" method="post"><button onclick="this.form.submit" class="carrinho"></button></form>
                 <a class='login' href="login.jsp"><button>Área Restrita</button></a>
             </div>
             <div id="topo">
@@ -27,7 +33,7 @@
                         String[] row;
                         if(r != null && r.size()>0) {
                             float total = 0;
-                            out.println("<form id='' action='' method='post'>");
+                            out.println("<form action='Remover_Carrinho' method='post'>");
                             out.println("<input id='id'  name='id' type='hidden' value=''>");
                             out.println("<table><tr>");
                             out.println("<th>Nome</th>");
@@ -43,23 +49,24 @@
 
                                 for (int j = 1; j < 4; j++) 
                                     out.println("<td>"+row[j]+"</td>");
-                                out.println("<td><button class='remover' type='button' onClick=''>Remover</button></td>");
+                                out.println("<td><button class='remover' type='button' onClick='removerCarrinho(\""+row[0]+"\"); this.form.submit();'>Remover</button></td>");
                                 out.println("</tr>");
                                 
                                 total += Float.parseFloat(row[3]);
                             }
-                            out.println("</table></div></form>");
-                            out.println("<b>Total: "+total+"</b>");
-                            out.println("<button>Finalizar Compra</button>");
+                            out.println("</table></form>");
+                            out.println("<h4>Total: "+total+"</h4><br/>");
+                            out.println("<button class='compra'>Finalizar Compra</button>");
+                            out.println("<a href='/Eletrio' class='voltar'><button>Voltar as compras</button></a>");
                         }
                         else {
                             out.println("<h3>Seu carrinho está vazio.</h3>");
+                            out.println("<a href='/Eletrio' class='voltar'><button>Voltar as compras</button></a>");
                         }
                     }
                     catch(Exception e) {}
                 %>
             </div>
-            <a href='/Eletrio' class='voltar'><button>Voltar as compras</button></a>
         </div>
     </body>
 </html>

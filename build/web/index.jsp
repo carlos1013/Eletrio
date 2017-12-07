@@ -15,6 +15,11 @@
                 id_produto.setAttribute('value', id);
                 nome_produto.setAttribute('value', nome);
             }
+            function mensagem(msg) {
+                if (msg !== 'null') {
+                    alert(msg);
+                }
+            }
         </script>
     </head>
     <body>
@@ -44,6 +49,7 @@
                 </form>
             </div>
             <div id="tabela">
+                <script><%= request.getAttribute("msg")%>;</script>
                 <%
                     try {
                         List<String> r = (List)request.getAttribute("r");

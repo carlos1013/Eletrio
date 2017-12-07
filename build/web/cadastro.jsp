@@ -103,7 +103,7 @@
                     <input name="BANDEIRA" value="American"  type="radio"/><img class="bandeira" src="images/ae.png"/>
                     <input name="BANDEIRA" value="Elo"  type="radio"/><img class="bandeira" src="images/elo.png"/><br/>
                     <button type="submit">Enviar</button>
-                    <a href='carrinho.jsp' class='cancelar'><button type="button">Cancelar</button></a>
+                    <a href='index.jsp' class='cancelar'><button type="button">Cancelar</button></a>
                 </form>
             </div>
         </div>

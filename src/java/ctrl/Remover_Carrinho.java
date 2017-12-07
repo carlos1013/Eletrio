@@ -23,7 +23,7 @@ public class Remover_Carrinho extends HttpServlet{
         if(list!=null){
             for (int i = 0; i < list.length; i++) {
                c = list[i];
-               if (c.getName().equals("")){
+               if (c.getName().equals(id)){
                    c.setMaxAge(0);
                    response.addCookie(c);
                }
