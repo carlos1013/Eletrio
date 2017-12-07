@@ -23,8 +23,9 @@ public class Retorna_Produtos extends HttpServlet{
         List<String> resp = new ArrayList<>();
         System.out.println(list.length);
         if(list!=null){
-            for (int i = 0; i < list.length-1; i++) {
+            for (int i = 1; i < list.length; i++) {
                c = list[i];
+               System.out.println("Cookie: "+c.getName()+" "+c.getValue());
                Produto p = (new Produto_DAO()).busca_produto((new Produto(Integer.parseInt(c.getName()))));
                String aux = Integer.toString(p.getId_categoria())+"¨";
                aux = aux + p.getNome()+"¨"+p.getDescricao()+"¨"+Float.toString(p.getPreco());

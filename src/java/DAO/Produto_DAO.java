@@ -136,7 +136,7 @@ public class Produto_DAO {
     
     public Produto busca_produto(Produto prod){
         Adapt_Conexao conexao = new Adapt_Conexao();
-        try (PreparedStatement sql = conexao.conectar().prepareStatement("")){
+        try (PreparedStatement sql = conexao.conectar().prepareStatement("SELECT ID,NOME,DESCRICAO,VALOR FROM PRODUTO WHERE ID="+Integer.toString(prod.getId()))){
             ResultSet res = sql.executeQuery();
             String[] aux = new String[4];
             while(res.next()){

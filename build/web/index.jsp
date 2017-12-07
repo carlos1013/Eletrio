@@ -20,7 +20,7 @@
     <body>
         <div class="conteudo">
             <div id='menu'>
-                <a class="carrinho" href='carrinho.jsp'></a>
+                <form action="Retorna_Produtos" method="post"><button onclick="this.form.submit" class="carrinho"></button></form>
                 <a class='login' href="login.jsp"><button>Área Restrita</button></a>
             </div>
             <div id="topo">

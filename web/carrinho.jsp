@@ -20,6 +20,7 @@
                 <h3>Minhas Compras</h3>
             </div>
             <div id="tabela">
+                <form id='form' action='Retorna_Produtos' method="post"></form>
                 <%
                     try {
                         List<String> r = (List)request.getAttribute("r");
