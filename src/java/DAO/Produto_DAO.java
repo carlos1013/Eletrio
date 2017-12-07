@@ -108,7 +108,7 @@ public class Produto_DAO {
         finally {
             conexao.encerarConexao();
         }
-        return null;
+        return resp;
     }
     
     public List<String> busca_nome(Produto prod){
@@ -119,7 +119,7 @@ public class Produto_DAO {
             String aux;
             while(res.next()){
                 aux = res.getString(1);
-                for (int x=3;x<=5;x++){
+                for (int x=2;x<=4;x++){
                     aux = aux+"¨"+res.getString(x);
                 }
                 resp.add(aux);
@@ -131,7 +131,7 @@ public class Produto_DAO {
         finally {
             conexao.encerarConexao();
         }
-        return null;
+        return resp;
     }
     
 }

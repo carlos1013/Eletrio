@@ -16,9 +16,7 @@ public class Pesquisa_Produto extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String texto = request.getParameter("text");
-        if (texto == null){
-            Produto_DAO p = new Produto_DAO();
-            request.setAttribute("r",p.consultar());
+        if (texto.equals("")){
             request.getRequestDispatcher("index.jsp").forward(request,response);
         }
         else{

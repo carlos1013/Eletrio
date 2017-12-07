@@ -36,6 +36,11 @@
         </script>
     </head>
     <body>
+        <div class="conteudo">
+            <div id='menu'>
+                <a class='loja' href="/Eletrio"><button>Voltar para a loja</button></a>
+            </div>
+        </div>
         <div id="login">
             <img src="images/logo.png"/>
             <script><%= request.getAttribute("message")%>;</script>

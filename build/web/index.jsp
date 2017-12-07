@@ -20,7 +20,7 @@
                 <h3>Realize suas compras!</h3>
             </div>
             <div id="listar">
-                <form id='tipo' action="" method="post">
+                <form id='tipo' action="Pesquisa_Categoria" method="post">
                     <input id='eletrod' name='item' type='radio' value="1" checked='checked' onClick='this.form.submit();'>
                     <label for='eletrod'>Eletrodomésticos</label>
                     <input id='info' name='item' type='radio' value="2" onClick='this.form.submit();'>
@@ -41,7 +41,6 @@
                         List<String> r = (List)request.getAttribute("r");
                         String[] row;
                         out.println("<form id='' action='' method='post'>");
-                        out.println("<input name='tabela' style='display:none' value=''>");
                         out.println("<input id='id'  name='id' type='hidden' value=''>");
                         out.println("<table><tr>");
                         out.println("<th>Nome</th>");
@@ -53,11 +52,11 @@
                         
                         for (int i = 0; i < r.size(); i++) {
                             row = r.get(i).split("¨");
-                            out.println("<tr id='linha"+i+"' idRow='"+row[0]+"'>");
+                            out.println("<tr>");
 
-                            for (int j = 1; j < 3; j++) 
-                                out.println("<td class='linha"+i+"'>"+row[j]+"</td>");
-                            out.println("<td><button type='button' onClick=''>Comprar</button></td>");
+                            for (int j = 1; j < 4; j++) 
+                                out.println("<td>"+row[j]+"</td>");
+                            out.println("<td><button class='compra' type='button' onClick=''>Comprar</button></td>");
                             out.println("</tr>");
                         }
                         out.println("</table></div></form>");
