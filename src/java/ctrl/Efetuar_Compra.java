@@ -24,13 +24,18 @@ public class Efetuar_Compra extends HttpServlet{
         try{
             String cpf = request.getParameter("CPF");
             Clientes_DAO c_dao = new Clientes_DAO();
+            System.out.println("antes de inserir cliente");
             c_dao.inserir((new Clientes(request.getParameter("NOME"),request.getParameter("ENDERECO"),request.getParameter("REFERENCIA"),request.getParameter("BAIRRO"),request.getParameter("CIDADE"),request.getParameter("CEP"),request.getParameter("ESTADO"),cpf,request.getParameter("IDENTIDADE"),request.getParameter("FIXO"),request.getParameter("CELULAR"),request.getParameter("CARTAO"),request.getParameter("BANDEIRA"))));
+            System.out.println("depois de inserir cliente");
             int id_cliente = c_dao.busca_id(new Clientes(cpf));
+            System.out.println("depois de buscar id cliente");
             int[] a_prod = cookie_to_prod(request,response);
+            System.out.println("depois de pegar array de produtos");
             Compras_DAO comp_dao = new Compras_DAO();
             for (int x=0;x<a_prod.length;x++){
                 comp_dao.inserir(new Compras(id_cliente,a_prod[x]));
             }
+            System.out.println("depois de inserir todos as compras");
             request.getRequestDispatcher("sucesso.jsp").forward(request,response);
         }
         catch (Exception ex) {

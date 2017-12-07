@@ -107,7 +107,7 @@ public class Clientes_DAO {
     
     public int busca_id (Clientes clnt){
         Adapt_Conexao conexao = new Adapt_Conexao();
-        try (PreparedStatement sql = conexao.conectar().prepareStatement("SELECT ID FROM CLIENTES WHERE CPF="+clnt.getCpf())){
+        try (PreparedStatement sql = conexao.conectar().prepareStatement("SELECT ID FROM CLIENTES WHERE CPF='"+clnt.getCpf()+"'")){
             ResultSet res = sql.executeQuery();
             int aux = -1;
             while(res.next()){

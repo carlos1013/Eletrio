@@ -10,7 +10,7 @@ import java.util.List;
 public class Compras_DAO {
     public void inserir(Compras comp) throws Exception {
         Adapt_Conexao conexao = new Adapt_Conexao();
-        try(PreparedStatement sql = conexao.conectar().prepareStatement("INSERT INTO CLIENTES (ID_CLIENTE,ID_PRODUTO) VALUES (?,?)")){
+        try(PreparedStatement sql = conexao.conectar().prepareStatement("INSERT INTO COMPRAS (ID_CLIENTE,ID_PRODUTO) VALUES (?,?)")){
             sql.setInt(1,comp.getId_cliente());
             sql.setInt(2,comp.getId_produto());
             sql.executeUpdate();
@@ -27,7 +27,7 @@ public class Compras_DAO {
     
     public void editar(Compras comp) throws Exception{
         Adapt_Conexao conexao = new Adapt_Conexao();
-        try(PreparedStatement sql = conexao.conectar().prepareStatement("UPDATE CLIENTES SET ID_CLIENTE=?,ID_PRODUTO=? WHERE ID=?")){
+        try(PreparedStatement sql = conexao.conectar().prepareStatement("UPDATE COMPRAS SET ID_CLIENTE=?,ID_PRODUTO=? WHERE ID=?")){
             sql.setInt(1,comp.getId_cliente());
             sql.setInt(2,comp.getId_produto());
             sql.setInt(3,comp.getId());
