@@ -16,12 +16,14 @@ public class Adicionar_Carrinho extends HttpServlet{
         
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter(""),nome = request.getParameter("");
+        String id = request.getParameter("id"),nome = request.getParameter("nome");
         if ((id == null) || (nome==null) || (id.equals("")) || (id.equals(""))){
             request.getRequestDispatcher("carrinho.jsp").forward(request,response);
         }
         Cookie c = new Cookie(id,nome);
         response.addCookie(c);
+        request.setAttribute("id",null);
+        request.setAttribute("nome",null);
         request.getRequestDispatcher("carrinho.jsp").forward(request,response);
     }
 }
